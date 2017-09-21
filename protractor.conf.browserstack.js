@@ -14,9 +14,9 @@ exports.config = {
     'browserName': 'chrome'
   },
   params: {
-	baseUrl: 'wwwqa.brainshark.com/'
+	baseUrl: 'https://wwwqa.brainshark.com/'
   },
-  baseUrl: 'wwwqa.brainshark.com/',
+  baseUrl: 'https://wwwqa.brainshark.com/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
