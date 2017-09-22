@@ -12,7 +12,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   params: {
-	baseUrl: 'http://localhost:4200/'
+	baseUrl: 'https://wwwqa.brainshark.com/'
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',

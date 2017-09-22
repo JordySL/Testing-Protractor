@@ -21,14 +21,14 @@ describe('protractor-test App', () => {
     const coachingDashboard = homePage.MasterNavBar.navigateToCoaching();
     browser.driver.sleep(5000); // -> What we are trying to avoid, time consuming.
 
-    const machineScore = coachingDashboard.navigateToChallengeByName('Its the ML challenge of accuracy');
+    const machineScore = coachingDashboard.navigateToChallengeByName('Test challenge for Automation');
     browser.waitForAngularEnabled(true);
     // END OF NON-ANGULAR PAGES
 
 
     const leaderBoard = machineScore.goToLeaderBoard();
     const firstChallengeScore = leaderBoard.getFirstChallenge();
-    expect(firstChallengeScore).toEqual('93.14%');
+    expect(firstChallengeScore).toEqual('83.12%');
   });
 
 
