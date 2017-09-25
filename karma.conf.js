@@ -22,8 +22,8 @@ module.exports = function (config) {
     angularCli: {
       environment: 'dev'
     },
-    reporters: ['progress', 'kjhtml', 'trx'],
-    trxReporter: { outputFile: 'test-results.trx', shortTestName: false },
+    reporters: ['progress', 'kjhtml'],
+    //trxReporter: { outputFile: 'test-results.trx', shortTestName: false },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
