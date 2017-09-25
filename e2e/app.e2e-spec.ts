@@ -1,5 +1,6 @@
 import { LogginPage } from './pages/loggin.po';
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
+import * as request from 'request';
 
 describe('protractor-test App', () => {
   let page: LogginPage;
@@ -8,6 +9,15 @@ describe('protractor-test App', () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
     setTimeout(() => console.log('inside time out'), 500);
     page = new LogginPage();
+
+    request.get('http://google.com/img.png', {}, function (error, message) {
+      console.log('it worked first one');
+    });
+
+    request.get('http://google.com/', {}, function (error, message) {
+      console.log('it worked  second one');
+    });
+
   });
 
   it('should login', () => {
