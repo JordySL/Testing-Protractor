@@ -10,7 +10,8 @@ exports.config = {
 		'./e2e/**/*.e2e-spec.ts'
 	],
 	capabilities: {
-		'browserName': 'chrome'
+		'browserName': 'chrome',    shardTestFiles: true,
+		maxInstances: 2
 	},
 	params: {
 		baseUrl: 'https://wwwqa.brainshark.com/'
