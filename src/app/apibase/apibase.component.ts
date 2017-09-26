@@ -1,10 +1,15 @@
 import { SerializationHelper } from './serialization-helper'
 import * as request from 'request';
 import { promise } from 'protractor';
+import { browser } from 'protractor';
 
 export class Apibase {
 
 	constructor() { }
+
+	public static  getBaseUrl(): string {
+		return browser.params.baseUrl;
+	}
 
 	private static makeHttpGet(url: string, queryStringParams?: any): string {
 		let responseBody = '';
@@ -31,17 +36,17 @@ export class Apibase {
 			qs: queryStringParams,
 			json: true,
 		  	body: requestBody? JSON.stringify(requestBody) : null
-			}, (error, resp, body) => {
+			}, 
+			(error, resp, body) => {
 				if (error) {
-					console.log('ERROR1: ' + error);
 					deferred.reject({
 						error: error
 					});
 				} else {
-					console.log('DEBUG1: ' + body);
 					deferred.fulfill(body);
 				}
-			});
+			}
+		);
 
 		return deferred.promise;
 	}
@@ -55,17 +60,8 @@ export class Apibase {
 		return SerializationHelper.toInstance(new responseClass(), json);
 	}
 
-	static httpPost<T>(url: string, responseClass: { new(): T; }, jsonBody: any, queryStringParams?: any, isBskResponse: boolean = true) {
-		let response = {};
-		const controlFlow = promise.controlFlow();
-		controlFlow.execute(() => {this.makeHttpPost(url, jsonBody, queryStringParams)
-			.then(res => {
-				console.log('DEBUG2: ' + res);
-				response = res;
-			})
-		});
-		console.log('URL: ' + url);
-		console.log('QueryParams: ' + JSON.stringify(queryStringParams));
+	static async httpPost<T>(url: string, responseClass: { new(): T; }, jsonBody: any, queryStringParams?: any, isBskResponse: boolean = true): Promise<T> {
+		const response = await this.makeHttpPost(url, jsonBody, queryStringParams);
 		return SerializationHelper.toInstance(new responseClass(), response);
 	}
 }
