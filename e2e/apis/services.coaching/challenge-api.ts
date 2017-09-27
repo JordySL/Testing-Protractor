@@ -9,17 +9,17 @@ export class ChallengeApi extends Apibase {
 		const url =  super.getBaseUrl() + 'brainshark/brainshark.services.coaching/user/' + session.UId +'/Challenge';
 		const queryParams = {
 		}
-		const challengePayload = ChallengePayload.createGenericChallengeInput(title, invitedUsers, reviewers);
-		const resopnse = await Apibase.httpPostBsk(session, url, ChallengeResponse, challengePayload, queryParams);
-		return resopnse[0];
+		let challengePayload = ChallengePayload.createGenericChallengeInput(title, invitedUsers, reviewers);
+		let response = await Apibase.httpPostBsk(session, url, ChallengeResponse, challengePayload, queryParams);
+		return response[0];
 	}
 
 	public static async createChallenge(session: Session, challengePayload: ChallengePayload): Promise<ChallengeResponse> {
 		const url =  super.getBaseUrl() + '/brainshark/brainshark.services.coaching/user/' + session.UId +'/Challenge';
 		const queryParams = {
 		}
-		const resopnse = await Apibase.httpPostBsk(session, url, ChallengeResponse, challengePayload, queryParams);
-		return resopnse[0];
+		let response = await Apibase.httpPostBsk(session, url, ChallengeResponse, challengePayload, queryParams);
+		return response[0];
 	}
 
 }
