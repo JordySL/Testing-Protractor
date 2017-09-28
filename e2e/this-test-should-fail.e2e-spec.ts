@@ -10,7 +10,7 @@ import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } f
 
 describe('protractor-test App', () => {
 	let page: LogginPage;
-	const title = 'New Challenge Title';
+	const title = 'New Challenge Title' + Math.floor(Date.now() / 1000);
 
 	beforeEach(async () => {
 		jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
@@ -28,22 +28,22 @@ describe('protractor-test App', () => {
 
 	});
 
-	it('should fail', (done) => {
+	it('should fail', async (done) => {
 		console.log('I hope this is the last message in the console');
-		browser.waitForAngularEnabled(false);
-		page.navigateTo();
-		const homePage = page.login('admin', 'admin');
-		browser.driver.sleep(5000); // -> What we are trying to avoid, time consuming.
+		await browser.waitForAngularEnabled(false);
+		await page.navigateTo();
+		await browser.driver.sleep(2000); // -> What we are trying to avoid, time consuming.
+		const homePage = await page.login('admin', 'admin');
+		await browser.driver.sleep(5000); // -> What we are trying to avoid, time consuming.
 
-		const coachingDashboard = homePage.MasterNavBar.navigateToCoaching();
-		browser.driver.sleep(5000); // -> What we are trying to avoid, time consuming.
-		coachingDashboard.isFirstChallengeName(title).then((result) => { 
-			expect(result === title);
-			done();
-		 });
-
-		const num: number = 5;
-		expect(num).toEqual(3);
+		const coachingDashboard = await homePage.MasterNavBar.navigateToCoaching();
+		await browser.driver.sleep(5000); // -> What we are trying to avoid, time consuming.
+		await coachingDashboard.search(title) ;
+		await browser.driver.sleep(1000);
+		const s = await coachingDashboard.isFirstChallengeName(title);
+		await console.log('6');
+		expect(await s === title);
+		await console.log('7');
 	});
 
 });
