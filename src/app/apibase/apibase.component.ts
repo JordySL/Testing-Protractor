@@ -69,9 +69,8 @@ export class Apibase {
 	}
 
 	// All Brainshark rest resopnses in the last few years follow the same json structure. This call assumes that response.
-	static async httpPostBsk<T>(session: Session, url: string, responseClass: { new(): T } , jsonBody: any, queryStringParams?: any): Promise<T[]> {
+	static async httpPostBsk<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, queryStringParams?: any): Promise<T[]> {
 		let response = await this.makeHttpPost(session, url, jsonBody, queryStringParams);
-		const a = Array<T>();
 		let results = response['results'];
 		return SerializationHelper.toInstanceArray(new responseClass(), results);
 	}
@@ -89,5 +88,54 @@ export class Apibase {
 			'uid': session.UId
 		};
 		return sessionParams
+	}
+
+	private static makeHttpDelete(session: Session, url: string, queryStringParams?: any) {
+		const deferred = promise.defer();
+
+		if (session) {
+			// For now we will pass session on the query string parms if session is provided
+			Object.assign(queryStringParams, this.getSessionParamsObject(session));
+		}
+
+		request({
+			url: url,
+			method: 'DELETE',
+			headers: {
+				'content-type': 'application/json'
+			},
+			json: true,
+			rejectUnauthorized: false, // Lets us hit our local machines with certificate issues
+			qs: queryStringParams
+		},
+			(error, resp, body) => {
+				if (error) {
+					deferred.reject({
+						error: error
+					});
+				} else {
+					deferred.fulfill(body);
+				}
+			}
+		);
+
+		return deferred.promise;
+	}
+
+	// This call is for all other calls that don't return the brainsahrk response json.
+	static async httpDelete<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams?: any): Promise<T> {
+		let response = await this.makeHttpDelete(session, url, queryStringParams);
+		return SerializationHelper.toInstance(new responseClass(), response);
+	}
+
+	// All Brainshark rest resopnses in the last few years follow the same json structure. This call assumes that response.
+	static async httpDeleteBsk<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams?: any): Promise<T[]> {
+		if(!queryStringParams) {
+			queryStringParams = { }
+		}
+		let response = await this.makeHttpDelete(session, url, queryStringParams);
+		
+		let results = response['results'];
+		return SerializationHelper.toInstanceArray(new responseClass(), results);
 	}
 }
