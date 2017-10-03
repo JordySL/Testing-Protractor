@@ -1,8 +1,8 @@
+import { Apibase } from './../apibase/apibase.component';
 import { WsErrorResponse } from './../common/wserror-response.model';
 import { ChallengePayload, User } from './models/challenge-payload.model';
 import { Session } from './../webservices-mobile/models/session-response.model';
 import { ChallengeResponse } from './models/challenge-response';
-import { Apibase } from './../../../src/app/apibase/apibase.component';
 
 export class ChallengeApi extends Apibase {
 

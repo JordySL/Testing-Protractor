@@ -1,5 +1,5 @@
+import { Apibase } from './apibase/apibase.component';
 import { Session } from './webservices-mobile/models/session-response.model';
-import { Apibase } from './../../src/app/apibase/apibase.component';
 
 export class SessionApi extends Apibase {
 

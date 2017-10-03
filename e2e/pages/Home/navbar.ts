@@ -2,11 +2,16 @@ import { CoachingDashboardPage } from './../Coaching/dashboard.po';
 import { browser, by, element, ElementFinder, ExpectedConditions } from 'protractor';
 
 export class NavBar {
-  private navbarElement: ElementFinder = element(by.id('nav-link-section'));
-  private coaching: ElementFinder = this.navbarElement.element(by.id('nav-coaching'));
 
-  navigateToCoaching() {
-    this.coaching.click();
-    return new CoachingDashboardPage();
-  }
+	async navigateToCoaching() {
+		const nav: ElementFinder = await this.getNav();
+		const coaching: ElementFinder = await nav.element(by.id('nav-coaching'));
+		coaching.click();
+		return new CoachingDashboardPage();
+	}
+
+	async getNav() {
+		await browser.wait(ExpectedConditions.presenceOf(element(by.id('nav-link-section'))), 10000);
+		return element(by.id('nav-link-section'));
+	}
 }

@@ -1,3 +1,4 @@
+import { TestUtils } from './../../../e2e/test-utils';
 import { Session } from './../../../e2e/apis/webservices-mobile/models/session-response.model';
 import { SerializationHelper } from './serialization-helper'
 import * as request from 'request';
@@ -71,7 +72,7 @@ export class Apibase {
 	// All Brainshark rest resopnses in the last few years follow the same json structure. This call assumes that response.
 	static async httpPostBsk<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, queryStringParams?: any): Promise<T[]> {
 		let response = await this.makeHttpPost(session, url, jsonBody, queryStringParams);
-		console.log('POST call to url (' + url + ') returned response ' + JSON.stringify(response));
+		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		let results = response['results'];
 		return SerializationHelper.toInstanceArray(new responseClass(), results);
 	}
@@ -79,6 +80,7 @@ export class Apibase {
 	// This call is for all other calls that don't return the brainsahrk response json.
 	static async httpPost<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, queryStringParams?: any): Promise<T> {
 		let response = await this.makeHttpPost(session, url, jsonBody, queryStringParams);
+		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		return SerializationHelper.toInstance(new responseClass(), response);
 	}
 
@@ -135,7 +137,7 @@ export class Apibase {
 			queryStringParams = { }
 		}
 		let response = await this.makeHttpDelete(session, url, queryStringParams);
-		console.log('DELETE call to url (' + url + ') returned response ' + JSON.stringify(response));
+		TestUtils.log('DELETE call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		let results = response['results'];
 		return SerializationHelper.toInstanceArray(new responseClass(), results);
 	}
