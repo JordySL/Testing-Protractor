@@ -1,5 +1,5 @@
 import { MachineScorePage } from './machine-score.po';
-import { browser, by, element, WebElement, ElementFinder, ElementArrayFinder } from 'protractor';
+import { browser, by, element, WebElement, ElementFinder, ElementArrayFinder, ExpectedConditions } from 'protractor';
 
 export class CoachingDashboardPage {
     private loginIframePosition = 0;
@@ -7,7 +7,7 @@ export class CoachingDashboardPage {
 
 	constructor() {
 		var until = browser.ExpectedConditions;
-		browser.wait(until.presenceOf(element(by.tagName('app-tabs'))), 10000, 'Element taking too long to appear in the DOM');
+		browser.wait(until.presenceOf(element(by.id('all-challenges-md-tab-group'))), 10000, 'Element ('+ 'all-challenges-md-tab-group' +') taking too long to appear in the DOM');
 		browser.waitForAngularEnabled(true);
 	}
 
@@ -26,29 +26,26 @@ export class CoachingDashboardPage {
 	}
 	
 	getDashboardRows(): ElementArrayFinder {
-		console.log('2');
+		browser.wait(ExpectedConditions.presenceOf(element(by.tagName('app-all-challenges-table'))), 10000, 'Timeout waiting for all challenges table');
 		const allChallengesTable = element(by.tagName('app-all-challenges-table'));
-		console.log('3');
 		const rows = allChallengesTable.all(by.className('datatable-body-row'));
-		console.log('4');
 		return rows;
 	}
 	
-	isFirstChallengeName(searchString: string) {
-		console.log('1');
-		const challenge = this.getDashboardRows().first();
-		console.log('5');
-		return challenge.element(by.tagName('a')).getText();
+	async isFirstChallengeName(searchString: string) {
+		const challenge = await this.getDashboardRows().first();
+		const text = await challenge.element(by.tagName('a')).getText();
+		return text;
 	}
 
 	
-    search(text: string) {
+    async search(text: string) {
 		const until = browser.ExpectedConditions;
-		browser.wait(until.presenceOf(element(by.className('au-search-box'))), 10000, 'Element taking too long to appear in the DOM');
-		let  searchBox: ElementFinder = element(by.className('au-search-box'));
+		browser.wait(until.presenceOf(element(by.css('input[placeholder="Search Challenges..."]'))), 10000, 'Element searchbox taking too long to appear in the DOM');
+		let  searchBox: ElementFinder = element(by.css('input[placeholder="Search Challenges..."]'));
         searchBox.click();
         searchBox.clear();
-        searchBox.sendKeys(text);
+       await searchBox.sendKeys(text);
 	}
 
 }

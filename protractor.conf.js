@@ -10,14 +10,15 @@ exports.config = {
 		'./e2e/**/*.e2e-spec.ts'
 	],
 	capabilities: {
-		'browserName': 'chrome',    shardTestFiles: true,
+		'browserName': 'chrome',    
+		shardTestFiles: true,
 		maxInstances: 2
 	},
 	params: {
 		baseUrl: 'https://wwwqa.brainshark.com/'
 	},
 	directConnect: true,
-	baseUrl: 'http://localhost:4200/',
+	baseUrl: 'https://wwwqa.brainshark.com/',
 	framework: 'jasmine',
 	jasmineNodeOpts: {
 		showColors: true,
@@ -33,5 +34,6 @@ exports.config = {
 		jasmine.getEnv().addReporter(
 			new JUnitXmlReporter('test-results/JUnitXML/', true, true)
 		);
+		browser.manage().timeouts().implicitlyWait(5000);
 	}
 };

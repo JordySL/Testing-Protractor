@@ -16,7 +16,7 @@ export class ChallengeApi extends Apibase {
 	}
 
 	public static async createChallenge(session: Session, challengePayload: ChallengePayload): Promise<ChallengeResponse> {
-		const url =  super.getBaseUrl() + '/brainshark/brainshark.services.coaching/user/' + session.UId +'/Challenge';
+		const url =  super.getBaseUrl() + 'brainshark/brainshark.services.coaching/user/' + session.UId +'/Challenge';
 		const queryParams = {
 		}
 		let response = await Apibase.httpPostBsk(session, url, ChallengeResponse, challengePayload, queryParams);
@@ -24,7 +24,7 @@ export class ChallengeApi extends Apibase {
 	}
 
 	public static async deleteChallenge(session: Session, challengeId: number) {
-		const url = super.getBaseUrl() + '/brainshark/brainshark.services.coaching/user/' + session.UId +'/Challenge/' + challengeId;
+		const url = super.getBaseUrl() + 'brainshark/brainshark.services.coaching/user/' + session.UId +'/Challenge/' + challengeId;
 		const queryParams = {
 		}
 		let response = await Apibase.httpDeleteBsk(session, url, WsErrorResponse);

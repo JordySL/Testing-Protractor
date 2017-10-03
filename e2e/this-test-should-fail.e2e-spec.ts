@@ -32,22 +32,20 @@ describe('protractor-test App',async () => {
 
 	});
 
-	it('should fail', async () => {
+	it('coaching POC', async () => {
 		console.log('I hope this is the last message in the console');
 		await browser.waitForAngularEnabled(false);
 		await page.navigateTo();
 		await browser.driver.sleep(2000); // -> What we are trying to avoid, time consuming.
-		const homePage = await page.login('admin2', 'admin');
+		const homePage = await page.login('admin', 'admin');
 		await browser.driver.sleep(5000); // -> What we are trying to avoid, time consuming.
 
 		const coachingDashboard = await homePage.MasterNavBar.navigateToCoaching();
-		await browser.driver.sleep(5000); // -> What we are trying to avoid, time consuming.
+		await browser.driver.sleep(3000); // -> What we are trying to avoid, time consuming.
 		await coachingDashboard.search(title) ;
 		await browser.driver.sleep(1000);
 		const s = await coachingDashboard.isFirstChallengeName(title);
-		await console.log('6');
-		expect (s === title);
-		await console.log('7');
+		await expect(s).toEqual(title);
 	});
 
 	afterEach(async () => {

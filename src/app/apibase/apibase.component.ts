@@ -71,6 +71,7 @@ export class Apibase {
 	// All Brainshark rest resopnses in the last few years follow the same json structure. This call assumes that response.
 	static async httpPostBsk<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, queryStringParams?: any): Promise<T[]> {
 		let response = await this.makeHttpPost(session, url, jsonBody, queryStringParams);
+		console.log('POST call to url (' + url + ') returned response ' + JSON.stringify(response));
 		let results = response['results'];
 		return SerializationHelper.toInstanceArray(new responseClass(), results);
 	}
@@ -134,7 +135,7 @@ export class Apibase {
 			queryStringParams = { }
 		}
 		let response = await this.makeHttpDelete(session, url, queryStringParams);
-		
+		console.log('DELETE call to url (' + url + ') returned response ' + JSON.stringify(response));
 		let results = response['results'];
 		return SerializationHelper.toInstanceArray(new responseClass(), results);
 	}
