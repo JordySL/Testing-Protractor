@@ -16,14 +16,14 @@ export class MachineScorePage {
         // this.versionList = dropdowns.get(1);
     }
 
-    switchVesion(version: number) {
+    async switchVesion(version: number) {
         // return this.versionList.click();
     }
 
-    goToLeaderBoard() {
-        browser.waitForAngularEnabled(false);
-        this.leaderBoardLink.click();
-        browser.waitForAngularEnabled(true);
-        return new LeaderBoardPage();
+    async goToLeaderBoard() {
+        await browser.waitForAngularEnabled(false);
+        await this.leaderBoardLink.click();
+        await browser.waitForAngularEnabled(true);
+        return await new LeaderBoardPage();
     }
 }

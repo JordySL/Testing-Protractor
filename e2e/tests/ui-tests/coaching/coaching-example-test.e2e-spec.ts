@@ -1,11 +1,11 @@
-import { TestUtils } from './test-utils';
-import { WsErrorResponse } from './apis/common/wserror-response.model';
-import { ChallengePayload, User } from './apis/services.coaching/models/challenge-payload.model';
-import { ChallengeApi } from './apis/services.coaching/challenge-api';
-import { ChallengeResponse } from './apis/services.coaching/models/challenge-response';
-import { SessionApi } from './apis/session-api';
-import { Session } from './apis/webservices-mobile/models/session-response.model';
-import { LogginPage } from './pages/loggin.po';
+import { LogginPage } from './../../../pages/loggin.po';
+import { TestUtils } from './../../../test-utils';
+import { WsErrorResponse } from './../../../apis/common/wserror-response.model';
+import { ChallengePayload, User } from './../../../apis/services.coaching/models/challenge-payload.model';
+import { ChallengeApi } from './../../../apis/services.coaching/challenge-api';
+import { ChallengeResponse } from './../../../apis/services.coaching/models/challenge-response';
+import { SessionApi } from './../../../apis/session-api';
+import { Session } from './../../../apis/webservices-mobile/models/session-response.model';
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
 
 
@@ -26,7 +26,7 @@ describe('protractor-test App',async () => {
 		const challenge: ChallengeResponse = await ChallengeApi.createChallengeGeneric(session, title, [user1], [user1]);
 		challengeId = challenge.id;
 
-		page = new LogginPage();
+		page = await new LogginPage();
 
 	});
 

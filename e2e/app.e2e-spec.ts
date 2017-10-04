@@ -5,42 +5,30 @@ import * as request from 'request';
 describe('protractor-test App', () => {
   let page: LogginPage;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
     setTimeout(() => console.log('inside time out'), 500);
-    page = new LogginPage();
-
-    request.get('http://google.com/img.png', {}, function (error, message) {
-      console.log('it worked first one');
-    });
-
-    request.get('http://google.com/', {}, function (error, message) {
-      console.log('it worked  second one');
-    });
-
+    page = await new LogginPage();
   });
 
-  it('should login', () => {
+  it('should login', async () => {
 
     // NON-ANGULAR PAGES
-    browser.waitForAngularEnabled(false);
-    page.navigateTo();
-    const homePage = page.login('admin', 'admin');
-    browser.driver.sleep(5000); // -> What we are trying to avoid, time consuming.
+    await browser.waitForAngularEnabled(false);
+    await page.navigateTo();
+    const homePage = await page.login('admin', 'admin');
+    await browser.driver.sleep(5000); // -> What we are trying to avoid, time consuming.
 
-    const coachingDashboard = homePage.MasterNavBar.navigateToCoaching();
-    browser.driver.sleep(5000); // -> What we are trying to avoid, time consuming.
+    const coachingDashboard = await homePage.MasterNavBar.navigateToCoaching();
+    await browser.driver.sleep(5000); // -> What we are trying to avoid, time consuming.
 
-    const machineScore = coachingDashboard.navigateToChallengeByName('Test challenge for Automation');
-    browser.waitForAngularEnabled(true);
+    const machineScore = await coachingDashboard.navigateToChallengeByName('Test challenge for Automation');
+    await browser.waitForAngularEnabled(true);
     // END OF NON-ANGULAR PAGES
 
-
-    const leaderBoard = machineScore.goToLeaderBoard();
-    const firstChallengeScore = leaderBoard.getFirstChallenge();
-    expect(firstChallengeScore).toEqual('83.12%');
+    const leaderBoard = await machineScore.goToLeaderBoard();
+    const firstChallengeScore = await leaderBoard.getFirstChallenge();
+    await expect(firstChallengeScore).toEqual('83.12%');
   });
-
-
 
 });

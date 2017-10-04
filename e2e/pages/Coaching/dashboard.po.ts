@@ -9,6 +9,7 @@ export class CoachingDashboardPage implements OnInit {
 	constructor() {
 
 	}
+	
 	async ngOnInit() {
 		var until = browser.ExpectedConditions;
 		await browser.wait(until.presenceOf(element(by.id('all-challenges-md-tab-group'))), 0, 'Element (' + 'all-challenges-md-tab-group' + ') taking too long to appear in the DOM');
@@ -18,9 +19,9 @@ export class CoachingDashboardPage implements OnInit {
 	async navigateToChallengeByName(challengeName: string) {
 		await this.setSearchBox(challengeName);
 		const challengeLink = element(by.linkText(challengeName));
-		challengeLink.click();
-		browser.waitForAngularEnabled(true);
-		return new MachineScorePage();
+		await challengeLink.click();
+		await browser.waitForAngularEnabled(true);
+		return await new MachineScorePage();
 	}
 
 	async setSearchBox(text: string) {
@@ -36,8 +37,8 @@ export class CoachingDashboardPage implements OnInit {
 	}
 
 	async isFirstChallengeName(searchString: string) {
-		const challengeRow: WebElement = await this.getDashboardRows()[0];
-		const challenge = await challengeRow.findElement(by.tagName('a'));
+		const challengeRows: WebElement[] = await this.getDashboardRows();
+		const challenge = await challengeRows[0].findElement(by.tagName('a'));
 		return await challenge.getText();
 	}
 
