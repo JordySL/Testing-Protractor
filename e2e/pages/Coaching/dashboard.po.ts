@@ -1,51 +1,54 @@
 import { MachineScorePage } from './machine-score.po';
-import { browser, by, element, WebElement, ElementFinder, ElementArrayFinder, ExpectedConditions } from 'protractor';
+import { browser, by, element, WebElement, ElementFinder, ElementArrayFinder, ExpectedConditions, promise } from 'protractor';
+import { OnInit } from '@angular/core';
 
-export class CoachingDashboardPage {
-    private loginIframePosition = 0;
-    private searchBox: ElementFinder = element(by.className('au-tableview-searchbox'));
+export class CoachingDashboardPage implements OnInit {
+	private loginIframePosition = 0;
+	private searchBox: ElementFinder = element(by.className('au-tableview-searchbox'));
 
 	constructor() {
+
+	}
+	async ngOnInit() {
 		var until = browser.ExpectedConditions;
-		browser.wait(until.presenceOf(element(by.id('all-challenges-md-tab-group'))), 10000, 'Element ('+ 'all-challenges-md-tab-group' +') taking too long to appear in the DOM');
+		await browser.wait(until.presenceOf(element(by.id('all-challenges-md-tab-group'))), 0, 'Element (' + 'all-challenges-md-tab-group' + ') taking too long to appear in the DOM');
+		await browser.waitForAngularEnabled(true);
+	}
+
+	async navigateToChallengeByName(challengeName: string) {
+		await this.setSearchBox(challengeName);
+		const challengeLink = element(by.linkText(challengeName));
+		challengeLink.click();
 		browser.waitForAngularEnabled(true);
+		return new MachineScorePage();
 	}
 
-    navigateToChallengeByName(challengeName: string) {
-        this.setSearchBox(challengeName);
-        const challengeLink = element(by.linkText(challengeName));
-        challengeLink.click();
-        browser.waitForAngularEnabled(true);
-        return new MachineScorePage();
-    }
+	async setSearchBox(text: string) {
+		await this.searchBox.click();
+		await this.searchBox.clear();
+		await this.searchBox.sendKeys(text);
+	}
 
-    setSearchBox(text: string) {
-        this.searchBox.click();
-        this.searchBox.clear();
-        this.searchBox.sendKeys(text);
+	async getDashboardRows(): Promise<WebElement[]> {
+		await browser.wait(ExpectedConditions.presenceOf(element(by.tagName('app-all-challenges-table'))), 10000, 'Timeout waiting for all challenges table');
+		const allChallengesTable = await browser.findElement(by.tagName('app-all-challenges-table'));
+		return await allChallengesTable.findElements(by.className('datatable-body-row'));
 	}
-	
-	getDashboardRows(): ElementArrayFinder {
-		browser.wait(ExpectedConditions.presenceOf(element(by.tagName('app-all-challenges-table'))), 10000, 'Timeout waiting for all challenges table');
-		const allChallengesTable = element(by.tagName('app-all-challenges-table'));
-		const rows = allChallengesTable.all(by.className('datatable-body-row'));
-		return rows;
-	}
-	
+
 	async isFirstChallengeName(searchString: string) {
-		const challenge = await this.getDashboardRows().first();
-		const text = await challenge.element(by.tagName('a')).getText();
-		return text;
+		const challengeRow: WebElement = await this.getDashboardRows()[0];
+		const challenge = await challengeRow.findElement(by.tagName('a'));
+		return await challenge.getText();
 	}
 
-	
-    async search(text: string) {
+	async search(text: string) {
 		const until = browser.ExpectedConditions;
-		browser.wait(until.presenceOf(element(by.css('input[placeholder="Search Challenges..."]'))), 10000, 'Element searchbox taking too long to appear in the DOM');
-		let  searchBox: ElementFinder = element(by.css('input[placeholder="Search Challenges..."]'));
-        searchBox.click();
-        searchBox.clear();
-       await searchBox.sendKeys(text);
+		await browser.wait(until.presenceOf(element(by.css('input[placeholder="Search Challenges..."]'))), 10000, 'Element searchbox taking too long to appear in the DOM');
+		let searchBox: WebElement = await browser.findElement(by.css('input[placeholder="Search Challenges..."]'));
+		await searchBox.click();
+		await searchBox.clear();
+		await searchBox.sendKeys(text);
+		browser.sleep(1000);
 	}
 
 }

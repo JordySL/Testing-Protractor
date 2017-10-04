@@ -34,11 +34,9 @@ describe('protractor-test App',async () => {
 		await browser.waitForAngularEnabled(false);
 		await page.navigateTo();
 		const homePage = await page.login('admin', 'admin');
-			
+
 		const coachingDashboard = await homePage.MasterNavBar.navigateToCoaching();
-		await browser.driver.sleep(3000); // -> What we are trying to avoid, time consuming.
 		await coachingDashboard.search(title) ;
-		await browser.driver.sleep(1000);
 		const s = await coachingDashboard.isFirstChallengeName(title);
 		await expect(s).toEqual(title);
 	});

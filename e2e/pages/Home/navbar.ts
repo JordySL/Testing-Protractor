@@ -7,7 +7,7 @@ export class NavBar {
 		const nav: ElementFinder = await this.getNav();
 		const coaching: ElementFinder = await nav.element(by.id('nav-coaching'));
 		coaching.click();
-		return new CoachingDashboardPage();
+		return await new CoachingDashboardPage();
 	}
 
 	async getNav() {
