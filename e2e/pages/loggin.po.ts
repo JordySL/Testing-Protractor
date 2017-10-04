@@ -7,23 +7,23 @@ export class LogginPage {
     private password: ElementFinder = element(by.id('txtPassword'));
     private btnLogin: ElementFinder = element(by.id('bntLogin'));
 
-    async navigateTo() {
-        await browser.get(browser.params.baseUrl + 'brainshark/public/login/m/login2.asp?companyid=20586');
+     navigateTo() {
+         browser.get(browser.params.baseUrl + 'brainshark/public/login/m/login2.asp?companyid=20586');
         return browser.switchTo().frame(this.loginIframePosition);
     }
 
-    login(username: string, password: string) {
-        this.setUsername(username);
-        this.setPassword(password);
-        this.btnLogin.click();
+    async login(username: string, password: string) {
+       await  this.setUsername(username);
+        await this.setPassword(password);
+        await this.btnLogin.click();
         return new HomePage();
     }
 
-    setUsername(username: string) {
-        return this.username.sendKeys(username);
+    async setUsername(username: string) {
+        return await this.username.sendKeys(username);
     }
 
-    setPassword(password: string) {
-        return this.password.sendKeys(password);
+    async setPassword(password: string) {
+        return await this.password.sendKeys(password);
     }
 }

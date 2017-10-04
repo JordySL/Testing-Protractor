@@ -17,6 +17,8 @@ exports.config = {
 	params: {
 		baseUrl: 'https://wwwqa.brainshark.com/'
 	},
+	SELENIUM_PROMISE_MANAGER: false,
+	getPageTimeout: 60000,//change it based on your app response time
 	directConnect: true,
 	baseUrl: 'https://wwwqa.brainshark.com/',
 	framework: 'jasmine',

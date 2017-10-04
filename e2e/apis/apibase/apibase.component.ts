@@ -1,7 +1,7 @@
 import { TestUtils } from './../../../e2e/test-utils';
 import { Session } from './../../../e2e/apis/webservices-mobile/models/session-response.model';
 import { SerializationHelper } from './serialization-helper'
-import * as request from 'request';
+import * as request from 'request-promise';
 import { promise } from 'protractor';
 import { browser } from 'protractor';
 
@@ -27,15 +27,14 @@ export class Apibase {
 	}
 
 
-	private static makeHttpPost(session: Session, url: string, requestBody?: any, queryStringParams?: any) {
-		const deferred = promise.defer();
+	private static async makeHttpPost(session: Session, url: string, requestBody?: any, queryStringParams?: any) {
 
 		if (session) {
 			// For now we will pass session on the query string parms if session is provided
 			Object.assign(queryStringParams, this.getSessionParamsObject(session));
 		}
 
-		request({
+		return request({
 			url: url,
 			method: 'POST',
 			headers: {
@@ -45,19 +44,7 @@ export class Apibase {
 			qs: queryStringParams,
 			json: true,
 			body: requestBody ? requestBody : null
-		},
-			(error, resp, body) => {
-				if (error) {
-					deferred.reject({
-						error: error
-					});
-				} else {
-					deferred.fulfill(body);
-				}
-			}
-		);
-
-		return deferred.promise;
+		});
 	}
 
 	static httpGet<T>(url: string, responseClass: T, queryStringParams?: any, isBskResponse: boolean = true) {
@@ -94,14 +81,13 @@ export class Apibase {
 	}
 
 	private static makeHttpDelete(session: Session, url: string, queryStringParams?: any) {
-		const deferred = promise.defer();
 
 		if (session) {
 			// For now we will pass session on the query string parms if session is provided
 			Object.assign(queryStringParams, this.getSessionParamsObject(session));
 		}
 
-		request({
+		return request({
 			url: url,
 			method: 'DELETE',
 			headers: {
@@ -110,19 +96,7 @@ export class Apibase {
 			json: true,
 			rejectUnauthorized: false, // Lets us hit our local machines with certificate issues
 			qs: queryStringParams
-		},
-			(error, resp, body) => {
-				if (error) {
-					deferred.reject({
-						error: error
-					});
-				} else {
-					deferred.fulfill(body);
-				}
-			}
-		);
-
-		return deferred.promise;
+		});
 	}
 
 	// This call is for all other calls that don't return the brainsahrk response json.
