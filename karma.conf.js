@@ -11,8 +11,9 @@ module.exports = function (config) {
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
 	  require('@angular/cli/plugins/karma'),
-	  require('karma-phantomjs-launcher'),
-    ],
+	  require('karma-phantomjs-launcher')
+	],
+	baseUrl: 'https://wwwqa.brainshark.com/',
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
@@ -21,8 +22,8 @@ module.exports = function (config) {
       fixWebpackSourcePaths: true
 	},
 	files: [
-		{pattern: 'e2e/**/*spec.ts', included: false},
-		{pattern: 'src/**/*spec.ts', included: false},
+		{pattern: 'e2e/**/*api.spec.ts', included: false},
+		{pattern: 'src/**/*api.spec.ts', included: false},
 		'src/test.ts'
 	  ],
     angularCli: {
@@ -35,7 +36,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
+    browsers: ['PhantomJS'],
+    singleRun: true
   });
 };

@@ -10,7 +10,7 @@ export class Apibase {
 	constructor() { }
 
 	public static getBaseUrl(): string {
-		return browser.params.baseUrl;
+		return 'https://wwwqa.brainshark.com/';
 	}
 
 	private static makeHttpGet(url: string, queryStringParams?: any): string {
