@@ -37,6 +37,7 @@
     "@types/node": "~6.0.60",
     "@types/request": "^2.0.3",
     "@types/request-promise": "^4.1.38",
+    "bluebird": "^3.5.1",
     "codelyzer": "~3.1.1",
     "jasmine-core": "~2.6.2",
     "jasmine-reporters": "^2.2.1",

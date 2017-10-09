@@ -1,12 +1,11 @@
-import { async } from '@angular/core/testing';
-import { LogginPage } from './../../../e2e/pages/loggin.po';
-import { TestUtils } from './../../../e2e/test-utils';
-import { WsErrorResponse } from './../../../e2e/apis/common/wserror-response.model';
-import { ChallengePayload, User } from './../../../e2e/apis/services.coaching/models/challenge-payload.model';
-import { ChallengeApi } from './../../../e2e/apis/services.coaching/challenge-api';
-import { ChallengeResponse } from './../../../e2e/apis/services.coaching/models/challenge-response';
-import { SessionApi } from './../../../e2e/apis/session-api';
-import { Session } from './../../../e2e/apis/webservices-mobile/models/session-response.model';
+import { WsErrorResponse } from './../../../apis/common/wserror-response.model';
+import { ChallengeApi } from './../../../apis/services.coaching/challenge-api';
+import { ChallengeResponse } from './../../../apis/services.coaching/models/challenge-response';
+import { User } from './../../../apis/services.coaching/models/challenge-payload.model';
+import { SessionApi } from './../../../apis/session-api';
+import { TestUtils } from './../../../test-utils';
+import { Session } from './../../../apis/webservices-mobile/models/session-response.model';
+
 
 describe('Create and Delete challenge Api test',async () => {
 	
