@@ -37,7 +37,7 @@ export class MailHandlerService {
 		let emailOffset = 0;
 		let messages: any[] = [];
 		let foundEmails = [];
-		const sleepSeconds = 2; // We might want to tweak this. We want tests to get results quick but this might be a bit too quickly to keep refreshing the inbox
+		const sleepSeconds = 5; 
 		
 		while (timeoutSeconds > 0) {
 
