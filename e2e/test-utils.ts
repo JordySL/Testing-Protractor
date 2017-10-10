@@ -10,4 +10,8 @@ export class TestUtils {
 		return Math.floor(Date.now() / 1000);
 	}
 
+	public static sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	  }
+
 }
