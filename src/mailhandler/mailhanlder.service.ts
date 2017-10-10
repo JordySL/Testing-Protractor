@@ -36,8 +36,9 @@ export class MailHandlerService {
 		let emailIndex = inbox.exists;
 		let emailOffset = 0;
 		let messages: any[] = [];
-		let foundCount = 0;
 		let foundEmails = [];
+		const sleepSeconds = 2; // We might want to tweak this. We want tests to get results quick but this might be a bit too quickly to keep refreshing the inbox
+		
 		while (timeoutSeconds > 0) {
 
 			inbox = await this.client.selectMailbox("INBOX");
@@ -55,19 +56,19 @@ export class MailHandlerService {
 					const subject = m['envelope']['subject'];
 					if (subject.trim() === subjectToMatch) {
 						TestUtils.log('Found message with subject: [' + subjectToMatch + ']');
-						foundCount++;
 						foundEmails.push(m); // push the whole message
 					}
 
 				}
 			}
 
-			if (foundCount >= expectedEmailCount) {
+			if (foundEmails.length >= expectedEmailCount) {
 				break;
 			}
 
-			await TestUtils.sleep(2000);
-			timeoutSeconds = timeoutSeconds - 2;
+			
+			await TestUtils.sleep(sleepSeconds * 1000);
+			timeoutSeconds = timeoutSeconds - sleepSeconds;
 		}
 
 		await this.client.close();
