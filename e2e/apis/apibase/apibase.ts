@@ -30,7 +30,6 @@ export class Apibase {
 		});
 	}
 
-
 	private static async makeHttpPost(session: Session, url: string, requestBody?: any, queryStringParams?: any) {
 
 		if (session) {

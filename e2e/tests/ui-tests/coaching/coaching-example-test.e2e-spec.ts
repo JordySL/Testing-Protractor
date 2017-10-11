@@ -20,8 +20,10 @@ describe('protractor-test App',async () => {
 		//jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
 		setTimeout(() => console.log('inside time out'), 500);
 		const mailHandler = new MailHandlerService();
-		const emailFound: any[] = await mailHandler.waitForEmailsBySubject('OK', 1, 60);
-		console.log(JSON.stringify(emailFound));
+		const emails: any = await mailHandler.waitForEmailsBySubject('OK', 3, 60);
+		const emailsFound: any[] = emails.emails;
+		console.log(JSON.stringify(emailsFound));
+		console.log(JSON.stringify('Size: ' + emailsFound.length));
 
 		session = await SessionApi.getSession('admin', 'admin', 'nolan');
 

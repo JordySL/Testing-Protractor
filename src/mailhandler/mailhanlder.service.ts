@@ -1,3 +1,4 @@
+import { Emails } from './emails.model';
 import { TestUtils } from './../../e2e/test-utils';
 import { Injectable } from '@angular/core';
 
@@ -29,64 +30,75 @@ export class MailHandlerService {
 		}
 	}
 
-	public async waitForEmailsBySubject(subjectToMatch: string, expectedEmailCount: number, timeoutSeconds: number): Promise<any[]> {
-		await this.client.connect();
-		let inbox = await this.client.selectMailbox("INBOX");
-		TestUtils.log('Connected to outlook inbox');
-		let emailIndex = inbox.exists;
-		let emailOffset = 0;
-		let messages: any[] = [];
-		let foundEmails = [];
-		const sleepSeconds = 5; 
-		
-		while (timeoutSeconds > 0) {
+	public async waitForEmailsBySubject(subjectToMatch: string, expectedEmailCount: number, timeoutSeconds: number): Promise<Emails> {
 
-			inbox = await this.client.selectMailbox("INBOX");
-			TestUtils.log('Refreshing Inbox');
-			let newEmailIndex = inbox.exists;
+		let internalRetryTmeOutId: NodeJS.Timer;
+		let externalTimeOutId: NodeJS.Timer;
 
-			if (newEmailIndex > emailIndex) {
+		let promiseForThis = new Promise<Emails>(async (resolve, reject) => {
+			await this.client.connect();
+			let inbox = await this.client.selectMailbox("INBOX");
+			TestUtils.log('Connected to outlook inbox');
+			let emailIndex = inbox.exists;
+			let emailOffset = 0;
+			let messages: any[] = [];
+			let foundEmails = new Emails();
 
-				emailOffset = (newEmailIndex - emailIndex) - 1;
-				emailIndex = newEmailIndex;
+			const retryTimeInMilliSeconds = 5000;
 
-				messages = await this.getMessages(emailIndex, emailOffset);
+			internalRetryTmeOutId = await setInterval(async () => {
 
-				for (let m of messages) {
-					const subject = m['envelope']['subject'];
-					if (subject.trim() === subjectToMatch) {
-						TestUtils.log('Found message with subject: [' + subjectToMatch + ']');
-						foundEmails.push(m); // push the whole message
+				inbox = await this.client.selectMailbox("INBOX");
+				TestUtils.log('Refreshing Inbox');
+				let newEmailIndex = inbox.exists;
+
+				if (newEmailIndex > emailIndex) {
+
+					emailOffset = (newEmailIndex - emailIndex) - 1;
+					emailIndex = newEmailIndex;
+
+					messages = await this.getMessages(emailIndex, emailOffset);
+
+					for (let m of messages) {
+						const subject = m['envelope']['subject'];
+						if (subject.trim() === subjectToMatch) {
+							TestUtils.log('Recieved new message with matching subject: [' + subjectToMatch + ']');
+							foundEmails.emails.push(m); // push the whole message
+						} else {
+							TestUtils.log('Recieved new message with subject: [' + subject.trim() + ']');
+						}
 					}
-
 				}
-			}
 
-			if (foundEmails.length >= expectedEmailCount) {
-				break;
-			}
+				if (foundEmails.emails.length >= expectedEmailCount) {
+					clearInterval(externalTimeOutId);
+					clearInterval(internalRetryTmeOutId);
+					await this.client.close();
+					resolve(foundEmails);
+				}
+			}, retryTimeInMilliSeconds);
 
-			
-			await TestUtils.sleep(sleepSeconds * 1000);
-			timeoutSeconds = timeoutSeconds - sleepSeconds;
-		}
+			externalTimeOutId = setInterval(() => {
+				clearInterval(internalRetryTmeOutId);
+				clearInterval(externalTimeOutId);
+				resolve(foundEmails);
+			}, (timeoutSeconds * 1000));
+		});
 
-		await this.client.close();
-		return foundEmails; // TODO: Probably create some object instead of returning 'any[]'
+		return promiseForThis;
 	}
 
-	public async waitForEmailBySubject(subjectToMatch: string, timeoutSeconds: number): Promise<any[]> {
+	public async waitForEmailBySubject(subjectToMatch: string, timeoutSeconds: number): Promise<Emails> {
 		return await this.waitForEmailsBySubject(subjectToMatch, 1, timeoutSeconds);
 	}
 
-	public async expectEmailsBySubject(subjectToMatch: string, expectedEmailCount, timeoutSeconds: number) {
-		const foundEmails: any[] = await this.waitForEmailsBySubject(subjectToMatch, 1, timeoutSeconds);
-		return (foundEmails >= expectedEmailCount);
+	public async expectEmailsBySubject(subjectToMatch: string, expectedEmailCount, timeoutSeconds: number): Promise<boolean> {
+		const foundEmails: Emails = await this.waitForEmailsBySubject(subjectToMatch, 1, timeoutSeconds);
+		return (foundEmails.emails.length >= expectedEmailCount);
 	}
 
-	private async getMessages(startIndex: number, count: number) {
-		return await this.client.listMessages('INBOX', (startIndex - count) + ':' + startIndex, ['uid', 'flags', 'envelope', 'body[]']);
+	private getMessages(startIndex: number, count: number) {
+		return this.client.listMessages('INBOX', (startIndex - count) + ':' + startIndex, ['uid', 'flags', 'envelope', 'body[]']);
 	}
-
 
 }
