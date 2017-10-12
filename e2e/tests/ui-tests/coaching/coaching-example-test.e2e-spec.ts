@@ -1,3 +1,4 @@
+import { MailHandlerService } from './../../../../src/mailhandler/mailhanlder.service';
 import { LogginPage } from './../../../pages/loggin.po';
 import { TestUtils } from './../../../test-utils';
 import { WsErrorResponse } from './../../../apis/common/wserror-response.model';
@@ -16,8 +17,13 @@ describe('protractor-test App',async () => {
 	let challengeId: number;
 
 	beforeEach(async () => {
-		jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
+		//jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
 		setTimeout(() => console.log('inside time out'), 500);
+		const mailHandler = new MailHandlerService();
+		const emails: any = await mailHandler.waitForEmailsBySubject('OK', 3, 60);
+		const emailsFound: any[] = emails.emails;
+		console.log(JSON.stringify(emailsFound));
+		console.log(JSON.stringify('Size: ' + emailsFound.length));
 
 		session = await SessionApi.getSession('admin', 'admin', 'nolan');
 
@@ -28,7 +34,7 @@ describe('protractor-test App',async () => {
 
 		page = await new LogginPage();
 
-	});
+	}, 200000);
 
 	it('coaching POC', async () => {
 		await browser.waitForAngularEnabled(false);
