@@ -1,7 +1,6 @@
 import { TestUtils } from './../test-utils';
 import { Emails } from './emails.model';
-import ImapClient from 'emailjs-imap-client';
-
+import * as ImapClient from 'emailjs-imap-client';
 
 export class MailHandlerService {
 
