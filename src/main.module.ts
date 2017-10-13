@@ -10,4 +10,4 @@ import { NgModule } from '@angular/core';
   providers: [],
   bootstrap: []
 })
-export class AppModule { }
+export class MainModule { }

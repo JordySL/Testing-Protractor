@@ -24,7 +24,7 @@ module.exports = function (config) {
 	files: [
 		{pattern: 'e2e/**/*api.spec.ts', included: false},
 		{pattern: 'src/**/*api.spec.ts', included: false},
-		'src/test.ts'
+		'src/test.ts' // entry point
 	  ],
     angularCli: {
       environment: 'dev'
