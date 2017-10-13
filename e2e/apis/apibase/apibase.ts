@@ -13,10 +13,10 @@ export class Apibase {
 		return 'https://wwwqa.brainshark.com/';
 	}
 
-	private static async makeHttpGet(session: Session, url: string, queryStringParams?: any) {
+	private static makeHttpGet(session: Session, url: string, queryStringParams?: any): request.RequestPromise {
 		if (session) {
 			// For now we will pass session on the query string parms if session is provided
-			Object.assign(queryStringParams, this.getSessionParamsObject(session));
+			(<any>Object).assign(queryStringParams, this.getSessionParamsObject(session));
 		}
 		return request({
 			url: url,
@@ -30,11 +30,11 @@ export class Apibase {
 		});
 	}
 
-	private static async makeHttpPost(session: Session, url: string, requestBody?: any, queryStringParams?: any) {
+	private static makeHttpPost(session: Session, url: string, requestBody?: any, queryStringParams?: any): request.RequestPromise {
 
 		if (session) {
 			// For now we will pass session on the query string parms if session is provided
-			Object.assign(queryStringParams, this.getSessionParamsObject(session));
+			(<any>Object).assign(queryStringParams, this.getSessionParamsObject(session));
 		}
 
 		return request({
@@ -50,11 +50,11 @@ export class Apibase {
 		});
 	}
 
-	private static async makeHttpPut(session: Session, url: string, requestBody?: any, queryStringParams?: any) {
+	private static makeHttpPut(session: Session, url: string, requestBody?: any, queryStringParams?: any): request.RequestPromise {
 
 		if (session) {
 			// For now we will pass session on the query string parms if session is provided
-			Object.assign(queryStringParams, this.getSessionParamsObject(session));
+			(<any>Object).assign(queryStringParams, this.getSessionParamsObject(session));
 		}
 
 		return request({
@@ -70,11 +70,11 @@ export class Apibase {
 		});
 	}
 
-	private static makeHttpDelete(session: Session, url: string, queryStringParams?: any) {
+	private static makeHttpDelete(session: Session, url: string, queryStringParams?: any): request.RequestPromise {
 
 		if (session) {
 			// For now we will pass session on the query string parms if session is provided
-			Object.assign(queryStringParams, this.getSessionParamsObject(session));
+			(<any>Object).assign(queryStringParams, this.getSessionParamsObject(session));
 		}
 
 		return request({
