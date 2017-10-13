@@ -1,4 +1,4 @@
-import { MailHandlerService } from './../../../../src/mailhandler/mailhanlder.service';
+import { MailHandlerService } from '../../../mailhandler/mailhanlder.service';
 import { LogginPage } from './../../../pages/loggin.po';
 import { TestUtils } from './../../../test-utils';
 import { WsErrorResponse } from './../../../apis/common/wserror-response.model';
@@ -10,7 +10,8 @@ import { Session } from './../../../apis/webservices-mobile/models/session-respo
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
 
 
-describe('protractor-test App',async () => {
+
+describe('protractor-test App', async () => {
 	let page: LogginPage;
 	const title = 'New Challenge Title' + TestUtils.timestamp();
 	let session: Session;
@@ -42,13 +43,13 @@ describe('protractor-test App',async () => {
 		const homePage = await page.login('admin', 'admin');
 
 		const coachingDashboard = await homePage.MasterNavBar.navigateToCoaching();
-		await coachingDashboard.search(title) ;
+		await coachingDashboard.search(title);
 		const s = await coachingDashboard.isFirstChallengeName(title);
 		await expect(s).toEqual(title);
 	});
 
 	afterEach(async () => {
-		const response: WsErrorResponse = await ChallengeApi.deleteChallenge(session,challengeId);
+		const response: WsErrorResponse = await ChallengeApi.deleteChallenge(session, challengeId);
 	});
 
 });

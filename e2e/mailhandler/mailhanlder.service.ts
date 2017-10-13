@@ -1,8 +1,8 @@
+import { TestUtils } from './../test-utils';
 import { Emails } from './emails.model';
-import { TestUtils } from './../../e2e/test-utils';
-import { Injectable } from '@angular/core';
+import ImapClient from 'emailjs-imap-client';
 
-@Injectable()
+
 export class MailHandlerService {
 
 	client = null;
@@ -23,7 +23,7 @@ export class MailHandlerService {
 
 
 			// Found at https://github.com/emailjs/emailjs-imap-client
-			var ImapClient = require('emailjs-imap-client');
+			// var ImapClient = require('emailjs-imap-client');
 
 			this.client = new ImapClient(config[0], config[1], config[2]);
 			this.client.logLevel = this.client.LOG_LEVEL_NONE;

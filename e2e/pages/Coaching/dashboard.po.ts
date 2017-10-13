@@ -1,8 +1,7 @@
 import { MachineScorePage } from './machine-score.po';
 import { browser, by, element, WebElement, ElementFinder, ElementArrayFinder, ExpectedConditions, promise } from 'protractor';
-import { OnInit } from '@angular/core';
 
-export class CoachingDashboardPage implements OnInit {
+export class CoachingDashboardPage  {
 	private loginIframePosition = 0;
 	private searchBox: ElementFinder = element(by.className('au-tableview-searchbox'));
 
@@ -10,11 +9,11 @@ export class CoachingDashboardPage implements OnInit {
 
 	}
 	
-	async ngOnInit() {
-		var until = browser.ExpectedConditions;
-		await browser.wait(until.presenceOf(element(by.id('all-challenges-md-tab-group'))), 0, 'Element (' + 'all-challenges-md-tab-group' + ') taking too long to appear in the DOM');
-		await browser.waitForAngularEnabled(true);
-	}
+	// async ngOnInit() {
+	// 	var until = browser.ExpectedConditions;
+	// 	await browser.wait(until.presenceOf(element(by.id('all-challenges-md-tab-group'))), 0, 'Element (' + 'all-challenges-md-tab-group' + ') taking too long to appear in the DOM');
+	// 	await browser.waitForAngularEnabled(true);
+	// }
 
 	async navigateToChallengeByName(challengeName: string) {
 		await this.setSearchBox(challengeName);

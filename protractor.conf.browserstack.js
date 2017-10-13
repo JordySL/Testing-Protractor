@@ -33,5 +33,6 @@ exports.config = {
 		jasmine.getEnv().addReporter(
 			new JUnitXmlReporter('test-results/JUnitXML/', true, true)
 		);
-	}
+	},
+	SELENIUM_PROMISE_MANAGER: false,
 };
