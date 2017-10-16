@@ -20,7 +20,6 @@ export class Email {
 			let fileName = attachment.filename;
 			if(appendTimestamp) {
 				fileName = '[' + TestUtils.timestamp() + ']' + fileName;
-				console.log(fileName);
 			}
 			let promise = new Promise((resolve) => {
 				fs.writeFile('outputfiles/'+fileName, buffer, resolve);
