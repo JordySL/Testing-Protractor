@@ -10,17 +10,17 @@ exports.config = {
 		'./e2e/**/*.e2e-spec.ts'
 	],
 	capabilities: {
-		'browserName': 'chrome',    
-		shardTestFiles: true,
-		maxInstances: 2
+		'browserName': 'chrome' //chrome, firefox, MicrosoftEdge
 	},
 	params: {
 		baseUrl: 'https://wwwqa.brainshark.com/'
 	},
+	directConnect: false, // When set to true, will run the local browser cirectly. Currently only works for chrome.
+						  // FOR DEBUGGING OTHER BROWSER LOCALLY: set this to false, verify the config field 'seleniumAddress', and run the command in the comment first
 	SELENIUM_PROMISE_MANAGER: false,
 	getPageTimeout: 60000,//change it based on your app response time
-	directConnect: true,
 	baseUrl: 'https://wwwqa.brainshark.com/',
+	seleniumAddress: 'http://127.0.0.1:4444/wd/hub', // run 'npm run webdriver-start' to start the server
 	framework: 'jasmine',
 	jasmineNodeOpts: {
 		showColors: true,
