@@ -4,6 +4,12 @@ import { ParsedMail, simpleParser } from 'mailparser';
 import { TestUtils } from './../test-utils';
 import { Emails } from './emails.model';
 import * as ImapClient from 'emailjs-imap-client';
+
+export enum SubjectMatchType {
+	Exact,
+	Regex
+}
+
 export class MailHandlerService {
 	
 		client = null;
@@ -27,7 +33,7 @@ export class MailHandlerService {
 			}
 		}
 	
-		public async waitForEmailsBySubject(subjectToMatch: string, expectedEmailCount: number, timeoutSeconds: number): Promise<Emails> {
+		public async waitForEmailsBySubject(subjectToMatch: string, expectedEmailCount: number, timeoutSeconds: number, subjectMatchType: SubjectMatchType): Promise<Emails> {
 	
 			let internalRetryTmeOutId;
 			let externalTimeOutId;
@@ -60,7 +66,8 @@ export class MailHandlerService {
 	
 						for (let m of messages) {
 							const subject = m['envelope']['subject'];
-							if (subject.trim() === subjectToMatch) {
+							if (((subjectMatchType === SubjectMatchType.Exact) && (subject.trim() === subjectToMatch)) ||
+								((subjectMatchType === SubjectMatchType.Regex) && new RegExp(subjectToMatch).test) ) {
 								TestUtils.log('Recieved new message with matching subject: [' + subjectToMatch + ']');
 								// the message is gross looking like some sort of invalid json object.
 								let email: Email = new Email(
@@ -103,12 +110,12 @@ export class MailHandlerService {
 			return await simpleParser(rawBody);
 		}
 	
-		public async waitForEmailBySubject(subjectToMatch: string, timeoutSeconds: number): Promise<Emails> {
-			return await this.waitForEmailsBySubject(subjectToMatch, 1, timeoutSeconds);
+		public async waitForEmailBySubject(subjectToMatch: string, timeoutSeconds: number, subjectMatchType: SubjectMatchType): Promise<Emails> {
+			return await this.waitForEmailsBySubject(subjectToMatch, 1, timeoutSeconds, subjectMatchType);
 		}
 	
-		public async expectEmailsBySubject(subjectToMatch: string, expectedEmailCount, timeoutSeconds: number): Promise<boolean> {
-			const foundEmails: Emails = await this.waitForEmailsBySubject(subjectToMatch, 1, timeoutSeconds);
+		public async expectEmailsBySubject(subjectToMatch: string, expectedEmailCount, timeoutSeconds: number, subjectMatchType: SubjectMatchType): Promise<boolean> {
+			const foundEmails: Emails = await this.waitForEmailsBySubject(subjectToMatch, 1, timeoutSeconds, subjectMatchType);
 			return (foundEmails.emails.length >= expectedEmailCount);
 		}
 	

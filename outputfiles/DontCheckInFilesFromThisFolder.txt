@@ -1,0 +1,1 @@
+This folder will be used for downloading files from the brainshark application and should now have files checked in (except for this one)
