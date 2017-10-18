@@ -10,12 +10,12 @@ exports.config = {
 		'./e2e/**/*.e2e-spec.ts'
 	],
 	capabilities: {
-		'browserName': 'phantomjs' //chrome, firefox, MicrosoftEdge
+		'browserName': 'chrome' //chrome, firefox, MicrosoftEdge
 	},
 	params: {
 		baseUrl: 'https://wwwqa.brainshark.com/'
 	},
-	directConnect: false, // When set to true, will run the local browser cirectly. Currently only works for chrome.
+	directConnect: true, // When set to true, will run the local browser cirectly. Currently only works for chrome.
 						  // FOR DEBUGGING OTHER BROWSER LOCALLY: set this to false, verify the config field 'seleniumAddress', and run the command in the comment first
 	SELENIUM_PROMISE_MANAGER: false,
 	getPageTimeout: 60000,//change it based on your app response time
