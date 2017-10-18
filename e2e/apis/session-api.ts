@@ -10,6 +10,6 @@ export class SessionApi extends Apibase {
 			'password': password,
 			'login_dir': loginDirectory
 		}
-		return  await Apibase.httpPost(null, sessionUrl, Session, null, queryParams);
+		return  await Apibase.httpPost(null, sessionUrl, Session, null, null, queryParams);
 	}
 }

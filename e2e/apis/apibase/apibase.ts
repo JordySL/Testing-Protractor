@@ -4,6 +4,7 @@ import { SerializationHelper } from './serialization-helper'
 import * as request from 'request-promise';
 import { promise } from 'protractor';
 import { browser } from 'protractor';
+import * as fs from 'fs';
 
 export class Apibase {
 
@@ -13,7 +14,7 @@ export class Apibase {
 		return 'https://wwwqa.brainshark.com/';
 	}
 
-	private static makeHttpGet(session: Session, url: string, queryStringParams?: any): request.RequestPromise {
+	private static makeHttpGet(session: Session, url: string, queryStringParams: any): request.RequestPromise {
 		if (session) {
 			// For now we will pass session on the query string parms if session is provided
 			(<any>Object).assign(queryStringParams, this.getSessionParamsObject(session));
@@ -30,7 +31,11 @@ export class Apibase {
 		});
 	}
 
-	private static makeHttpPost(session: Session, url: string, requestBody?: any, queryStringParams?: any): request.RequestPromise {
+	private static makeHttpPost(session: Session, url: string, requestBody: any, form: any, queryStringParams: any): request.RequestPromise {
+
+		if (!queryStringParams) {
+			queryStringParams = {};
+		}
 
 		if (session) {
 			// For now we will pass session on the query string parms if session is provided
@@ -41,16 +46,42 @@ export class Apibase {
 			url: url,
 			method: 'POST',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json' // might not want to hardcode this
 			},
 			rejectUnauthorized: false, // Lets us hit our local machines with certificate issues
 			qs: queryStringParams,
 			json: true,
-			body: requestBody ? requestBody : null
+			body: requestBody ? requestBody : null,
+			form: form ? form : null
 		});
 	}
 
-	private static makeHttpPut(session: Session, url: string, requestBody?: any, queryStringParams?: any): request.RequestPromise {
+
+	private static httpFileSend(session: Session, method: string, url: string, pathToFile: string, queryStringParams: any): request.RequestPromise {
+
+		if (!queryStringParams) {
+			queryStringParams = {};
+		}
+
+		if (session) {
+			// For now we will pass session on the query string parms if session is provided
+			(<any>Object).assign(queryStringParams, this.getSessionParamsObject(session));
+		}
+		return request({
+			url: url,
+			method: method,
+			headers: {
+				'content-type': 'multipart/form-data; charset=UTF-8'
+			},
+			rejectUnauthorized: false, // Lets us hit our local machines with certificate issues
+			qs: queryStringParams,
+			formData: {
+				fileData: fs.createReadStream(pathToFile)
+			}
+		});
+	}
+
+	private static makeHttpPut(session: Session, url: string, requestBody: any, form: any, queryStringParams: any): request.RequestPromise {
 
 		if (session) {
 			// For now we will pass session on the query string parms if session is provided
@@ -61,16 +92,17 @@ export class Apibase {
 			url: url,
 			method: 'PUT',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json' // might not want to hardcode this
 			},
 			rejectUnauthorized: false, // Lets us hit our local machines with certificate issues
 			qs: queryStringParams,
 			json: true,
-			body: requestBody ? requestBody : null
+			body: requestBody ? requestBody : null,
+			form: form ? form : null
 		});
 	}
 
-	private static makeHttpDelete(session: Session, url: string, queryStringParams?: any): request.RequestPromise {
+	private static makeHttpDelete(session: Session, url: string, queryStringParams: any): request.RequestPromise {
 
 		if (session) {
 			// For now we will pass session on the query string parms if session is provided
@@ -90,45 +122,45 @@ export class Apibase {
 	}
 
 
-	static async httpGet<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams?: any) {
-		let response = await this.makeHttpGet(session, url);
+	static async httpGet<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any) {
+		let response = await this.makeHttpGet(session, url, queryStringParams);
 		TestUtils.log('GET call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		return SerializationHelper.toInstance(new responseClass(), response);
 	}
 
-	static async httpGetBsk<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams?: any) {
-		let response = await this.makeHttpGet(session, url);
+	static async httpGetBsk<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any) {
+		let response = await this.makeHttpGet(session, url, queryStringParams);
 		TestUtils.log('GET call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		let results = response['results'];
 		return SerializationHelper.toInstanceArray(new responseClass(), results);
 	}
 
 	// All Brainshark rest resopnses in the last few years follow the same json structure. This call assumes that response.
-	static async httpPostBsk<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, queryStringParams?: any): Promise<T[]> {
-		let response = await this.makeHttpPost(session, url, jsonBody, queryStringParams);
+	static async httpPostBsk<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any): Promise<T[]> {
+		let response = await this.makeHttpPost(session, url, jsonBody, form, queryStringParams);
 		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		let results = response['results'];
 		return SerializationHelper.toInstanceArray(new responseClass(), results);
 	}
 
 	// This call is for all other calls that don't return the brainsahrk response json.
-	static async httpPost<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, queryStringParams?: any): Promise<T> {
-		let response = await this.makeHttpPost(session, url, jsonBody, queryStringParams);
+	static async httpPost<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any): Promise<T> {
+		let response = await this.makeHttpPost(session, url, jsonBody, form, queryStringParams);
 		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		return SerializationHelper.toInstance(new responseClass(), response);
 	}
 
 	// All Brainshark rest resopnses in the last few years follow the same json structure. This call assumes that response.
-	static async httpPutBsk<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, queryStringParams?: any): Promise<T[]> {
-		let response = await this.makeHttpPut(session, url, jsonBody, queryStringParams);
+	static async httpPutBsk<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any): Promise<T[]> {
+		let response = await this.makeHttpPut(session, url, jsonBody, form, queryStringParams);
 		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		let results = response['results'];
 		return SerializationHelper.toInstanceArray(new responseClass(), results);
 	}
 
 	// This call is for all other calls that don't return the brainsahrk response json.
-	static async httpPut<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, queryStringParams?: any): Promise<T> {
-		let response = await this.makeHttpPut(session, url, jsonBody, queryStringParams);
+	static async httpPut<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any): Promise<T> {
+		let response = await this.makeHttpPut(session, url, jsonBody, form, queryStringParams);
 		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		return SerializationHelper.toInstance(new responseClass(), response);
 	}
@@ -143,19 +175,58 @@ export class Apibase {
 	}
 
 	// This call is for all other calls that don't return the brainsahrk response json.
-	static async httpDelete<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams?: any): Promise<T> {
+	static async httpDelete<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any): Promise<T> {
 		let response = await this.makeHttpDelete(session, url, queryStringParams);
+		TestUtils.log('DELETE call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		return SerializationHelper.toInstance(new responseClass(), response);
 	}
 
 	// All Brainshark rest resopnses in the last few years follow the same json structure. This call assumes that response.
-	static async httpDeleteBsk<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams?: any): Promise<T[]> {
-		if (!queryStringParams) {
-			queryStringParams = {}
+	static async httpDeleteBsk<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any): Promise<T[]> {
+		if (queryStringParams == null) {
+			queryStringParams = {};
 		}
 		let response = await this.makeHttpDelete(session, url, queryStringParams);
 		TestUtils.log('DELETE call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		let results = response['results'];
 		return SerializationHelper.toInstanceArray(new responseClass(), results);
+	}
+
+	static async httpPostFileBsk<T>(session: Session, url: string, responseClass: { new(): T }, pathToFile: string, queryStringParams: any): Promise<T[]> {
+		if (queryStringParams == null) {
+			queryStringParams = {};
+		}
+		let response = await this.httpFileSend(session, 'POST', url, pathToFile, queryStringParams);
+		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
+		let results = response['results'];
+		return SerializationHelper.toInstanceArray(new responseClass(), results);
+	}
+
+	static async httpPostFile(session: Session, url: string, pathToFile: string, queryStringParams?: any): Promise<string> {
+		if (queryStringParams == null) {
+			queryStringParams = {};
+		}
+		let response = await this.httpFileSend(session, 'POST', url, pathToFile, queryStringParams);
+		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
+		return response;
+	}
+
+	static async httpPutFileBsk<T>(session: Session, url: string, responseClass: { new(): T }, pathToFile: string, queryStringParams?: any): Promise<T[]> {
+		if (queryStringParams == null) {
+			queryStringParams = {}
+		}
+		let response = await this.httpFileSend(session, 'PUT', url, pathToFile, queryStringParams);
+		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
+		let results = response['results'];
+		return SerializationHelper.toInstanceArray(new responseClass(), results);
+	}
+
+	static async httpPutFile<T>(session: Session, url: string, responseClass: { new(): T }, pathToFile: string, queryStringParams?: any): Promise<T> {
+		if (!queryStringParams) {
+			queryStringParams = {}
+		}
+		let response = await this.httpFileSend(session, 'PUT', url, pathToFile, queryStringParams);
+		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
+		return SerializationHelper.toInstance(new responseClass(), response);
 	}
 }

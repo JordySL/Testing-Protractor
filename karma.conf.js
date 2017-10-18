@@ -36,7 +36,15 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome', 'Chrome_without_security'], // You may use 'ChromeCanary', 'Chromium' or any other supported browser
+	
+		// you can define custom flags
+		customLaunchers: {
+		  Chrome_without_security: {
+			base: 'Chrome',
+			flags: ['--disable-web-security']
+		  }
+		},
     singleRun: true
   });
 };
