@@ -1,11 +1,11 @@
-import { Email } from './../../../mailhandler/emails.email.model';
-import { Emails } from './../../../mailhandler/emails.model';
-import { MailHandlerService, SubjectMatchType } from './../../../mailhandler/mailhandler.service';
+import { Email } from '../../../test-utilities/mailhandler/emails.email.model';
+import { Emails } from '../../../test-utilities/mailhandler/emails.model';
+import { MailHandlerService, SubjectMatchType } from '../../../test-utilities/mailhandler/mailhandler.service';
 import { PresentationApi } from './../../../apis/webservices-mobile/presentation-api';
 import { SavePresentationForm } from './../../../apis/misc/models/savepresentation-form.model';
 import { SavePresentationResponse } from './../../../apis/misc/models/savepresentation-response.model';
 import { SavePresentation } from './../../../apis/misc/savepresentation-api';
-import { TestUtils } from './../../../test-utils';
+import { TestUtils } from '../../../test-utilities/test-utils';
 import { SessionApi } from './../../../apis/session-api';
 import { Session } from './../../../apis/webservices-mobile/models/session-response.model'
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';

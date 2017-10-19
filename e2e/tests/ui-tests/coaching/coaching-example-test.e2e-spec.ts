@@ -1,6 +1,6 @@
-import { MailHandlerService, SubjectMatchType } from '../../../mailhandler/mailhandler.service';
+import { MailHandlerService, SubjectMatchType } from '../../../test-utilities/mailhandler/mailhandler.service';
 import { LogginPage } from './../../../pages/loggin.po';
-import { TestUtils } from './../../../test-utils';
+import { TestUtils } from '../../../test-utilities/test-utils';
 import { WsErrorResponse } from './../../../apis/common/wserror-response.model';
 import { ChallengePayload, User } from './../../../apis/services.coaching/models/challenge-payload.model';
 import { ChallengeApi } from './../../../apis/services.coaching/challenge-api';

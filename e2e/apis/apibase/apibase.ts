@@ -1,4 +1,4 @@
-import { TestUtils } from './../../../e2e/test-utils';
+import { TestUtils } from '../../test-utilities/test-utils';
 import { Session } from './../../../e2e/apis/webservices-mobile/models/session-response.model';
 import { SerializationHelper } from './serialization-helper'
 import * as request from 'request-promise';

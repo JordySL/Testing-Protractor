@@ -1,5 +1,5 @@
 import { CheckConvertStatus } from './checkconversationstatus-api';
-import { TestUtils } from './../../test-utils';
+import { TestUtils } from '../../test-utilities/test-utils';
 import { SavePresentationForm } from './models/savepresentation-form.model';
 import { SavePresentationResponse } from './models/savepresentation-response.model';
 import { Apibase } from './../apibase/apibase';

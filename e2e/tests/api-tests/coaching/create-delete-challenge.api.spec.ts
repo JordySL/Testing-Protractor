@@ -3,7 +3,7 @@ import { ChallengeApi } from './../../../apis/services.coaching/challenge-api';
 import { ChallengeResponse } from './../../../apis/services.coaching/models/challenge-response';
 import { User } from './../../../apis/services.coaching/models/challenge-payload.model';
 import { SessionApi } from './../../../apis/session-api';
-import { TestUtils } from './../../../test-utils';
+import { TestUtils } from '../../../test-utilities/test-utils';
 import { Session } from './../../../apis/webservices-mobile/models/session-response.model';
 
 

@@ -1,4 +1,4 @@
-import { TestUtils } from './../test-utils';
+import { TestUtils } from '../test-utils';
 import { ParsedMail, Attachment } from 'mailparser';
 import { Envelope } from './email.envelope.model';
 import * as fs from 'fs';

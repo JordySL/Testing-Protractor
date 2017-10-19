@@ -1,7 +1,7 @@
 import { Envelope } from './email.envelope.model';
 import { Email } from './emails.email.model';
 import { ParsedMail, simpleParser } from 'mailparser';
-import { TestUtils } from './../test-utils';
+import { TestUtils } from '../test-utils';
 import { Emails } from './emails.model';
 import * as ImapClient from 'emailjs-imap-client';
 

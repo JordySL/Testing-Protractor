@@ -1,4 +1,4 @@
-import { TestUtils } from './../../test-utils';
+import { TestUtils } from '../../test-utilities/test-utils';
 import { Apibase } from './../apibase/apibase';
 import { CheckConvertStatusResponse } from './models/checkconversionstatus-response.model';
 import { Session } from './../webservices-mobile/models/session-response.model';
