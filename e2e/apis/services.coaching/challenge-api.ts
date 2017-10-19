@@ -7,7 +7,7 @@ import { ChallengeResponse } from './models/challenge-response';
 export class ChallengeApi extends Apibase {
 
 	private static getCoachingChallengeUrl(userId: number, challengeId?: number): string {
-		let url = super.getBaseUrl() + 'brainshark/brainshark.services.coaching/user/' + userId +'/Challenge/';
+		let url = super.getBaseUrl() + 'brainshark/brainshark.services.coaching/user/' + userId + '/Challenge/';
 		if (challengeId) {
 			url += challengeId;
 		}
@@ -15,9 +15,8 @@ export class ChallengeApi extends Apibase {
 	}
 
 	public static async createChallengeGeneric(session: Session, title: string, invitedUsers: User[], reviewers: User[]): Promise<ChallengeResponse> {
-		let challengePayload = ChallengePayload.createGenericChallengeInput(title, invitedUsers, reviewers);
-		let response = await this.createChallenge(session, challengePayload);
-		return response;
+		const challengePayload = ChallengePayload.createGenericChallengeInput(title, invitedUsers, reviewers);
+		return this.createChallenge(session, challengePayload);
 	}
 
 	public static async createChallenge(session: Session, challengePayload: ChallengePayload): Promise<ChallengeResponse> {
@@ -44,7 +43,7 @@ export class ChallengeApi extends Apibase {
 		return response[0];
 	}
 
-	
+
 	public static async getChallenges(session: Session, challengeId: number): Promise<ChallengeResponse> {
 		const url = this.getCoachingChallengeUrl(session.UId, challengeId);
 		const queryParams = {
