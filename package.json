@@ -12,7 +12,7 @@
     "e2e:qa": "ng e2e --no-serve --base-href=https://wwwqa.brainshark.com",
     "e2e:prod": "ng e2e --no-serve --base-href=https://www.brainshark.com",
     "e2e:vsts": "ng e2e --no-serve --config protractor.conf.browserstack.js",
-    "api-test": "mocha -r ts-node/register mocha/my-first-tests.spec.ts"
+    "api-test": "mocha -r ts-node/register mocha/my-first-tests.spec.ts --reporter mocha-junit-reporter"
   },
   "private": true,
   "dependencies": {
@@ -55,6 +55,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-phantomjs-launcher": "^1.0.4",
     "mocha": "^4.0.1",
+    "mocha-junit-reporter": "^1.15.0",
     "protractor": "~5.1.2",
     "request": "^2.82.0",
     "request-promise": "^4.2.2",
