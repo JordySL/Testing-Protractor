@@ -6,7 +6,7 @@ export class NavBar {
 	async navigateToCoaching() {
 		const nav: ElementFinder = await this.getNav();
 		const coaching: ElementFinder = await nav.element(by.id('nav-coaching'));
-		coaching.click();
+		await coaching.click();
 		return await new CoachingDashboardPage();
 	}
 

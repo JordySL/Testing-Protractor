@@ -6,7 +6,7 @@ export class CoachingDashboardPage  {
 	private searchBox: ElementFinder = element(by.className('au-tableview-searchbox'));
 
 	constructor() {
-
+		
 	}
 	
 	// async ngOnInit() {
@@ -38,7 +38,8 @@ export class CoachingDashboardPage  {
 	async isFirstChallengeName(searchString: string) {
 		const challengeRows: WebElement[] = await this.getDashboardRows();
 		const challenge = await challengeRows[0].findElement(by.tagName('a'));
-		return await challenge.getText();
+		const text = await challenge.getText();
+		return text.trim();
 	}
 
 	async search(text: string) {
