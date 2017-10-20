@@ -11,7 +11,7 @@ export class Apibase {
 	constructor() { }
 
 	public static getBaseUrl(): string {
-		return process.env.BSK_BASE_URL;
+		return process.env.BSK_API_BASE_URL;
 	}
 
 	private static makeHttpGet(session: Session, url: string, queryStringParams: any): request.RequestPromise {

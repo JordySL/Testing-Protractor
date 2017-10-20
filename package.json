@@ -6,7 +6,7 @@
     "ng": "ng",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
+    "e2e": "ng e2e --no-serve",
     "e2e:local": "ng e2e --no-serve --config protractor.conf.local.js",
     "e2e:vsts": "ng e2e --no-serve --config protractor.conf.browserstack.js",
     "api-test-qa": "mocha -r ts-node/register mocha/*.spec.ts --opts ./mocha/mocha.qa.opts",
