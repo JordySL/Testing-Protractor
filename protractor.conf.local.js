@@ -4,27 +4,15 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
 const { JUnitXmlReporter } = require('jasmine-reporters');
 
-exports.config = {
-	allScriptsTimeout: 60000,
-	specs: [
-		'./e2e/**/*.e2e-spec.ts'
-	],
-	capabilities: {
-		'browserName': 'chrome'
-	},
+const BaseConfiguration = require('./protractor.conf.js');
+
+var localConfiguration = {
 	params: {
 		baseUrl: 'https://nsullivan-t460.hq.brainshark.com/'
 	},
 	directConnect: true,
 	baseUrl: 'https://nsullivan-t460.hq.brainshark.com/',
-	framework: 'jasmine',
-	jasmineNodeOpts: {
-		showColors: true,
-		defaultTimeoutInterval: 30000,
-		print: function () { }
-	},
-	SELENIUM_PROMISE_MANAGER: false,
-	onPrepare() {
+	onPrepare: function() {
 		require('ts-node').register({
 			project: 'e2e/tsconfig.e2e.json'
 		});
@@ -35,3 +23,6 @@ exports.config = {
 		);
 	}
 };
+
+var finalConfiguration = Object.assign({},  BaseConfiguration.config ,localConfiguration);
+exports.config = finalConfiguration;

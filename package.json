@@ -13,8 +13,8 @@
     "api-test-qa": "mocha -r ts-node/register mocha/*.spec.ts --opts ./mocha/mocha.qa.opts",
     "api-test-dev": "mocha -r ts-node/register mocha/*.spec.ts --opts ./mocha/mocha.dev.opts",
     "webdriver-update": "webdriver-manager update",
-	"webdriver-start": "webdriver-manager start --edge \"C:\\Program Files (x86)\\Microsoft Web Driver\\MicrosoftWebDriver.exe\"",
-	"build": "webpack"
+    "webdriver-start": "webdriver-manager start --edge \"C:\\Program Files (x86)\\Microsoft Web Driver\\MicrosoftWebDriver.exe\"",
+    "build": "webpack"
   },
   "private": true,
   "dependencies": {

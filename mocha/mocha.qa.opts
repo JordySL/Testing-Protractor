@@ -1,4 +1,4 @@
 --reporter mocha-junit-reporter
---require test/mocha.env.js
+--require mocha/mocha.env.js
 --timeout 60000
 
