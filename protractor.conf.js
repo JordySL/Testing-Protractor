@@ -4,8 +4,8 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
 const { JUnitXmlReporter } = require('jasmine-reporters');
 
-const  configuration  = require('./environment-configuration.js');
-configuration.configureEnvironment();
+const  conf  = require('./environment-configuration.js').enviromentConfiguration;
+conf.configure(process.env.npm_config_server);
 
 exports.config = {
 	allScriptsTimeout: 60000,
