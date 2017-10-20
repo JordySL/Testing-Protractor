@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="0.89" tests="1" failures="0">
-  <testsuite name="Root Suite" timestamp="2017-10-19T18:59:06" tests="0" failures="0" time="0">
-  </testsuite>
-  <testsuite name="Create and Delete challenge Api test" timestamp="2017-10-19T18:59:06" tests="1" file="C:\Users\fjaramillo\Documents\Web Projects\brainshark-e2e-tests\mocha\my-first-tests.spec.ts" failures="0" time="0.89">
-    <testcase name="Create and Delete challenge Api test should return hello world" time="0.89" classname="should return hello world">
-    </testcase>
-  </testsuite>
-</testsuites>
