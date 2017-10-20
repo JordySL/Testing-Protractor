@@ -10,7 +10,7 @@
     "e2e:local": "ng e2e --no-serve --config protractor.conf.local.js",
     "e2e:vsts": "ng e2e --no-serve --config protractor.conf.browserstack.js",
     "api-test-vsts": "mocha -r ts-node/register mocha/*.spec.ts --opts ./mocha/mocha.vsts.opts",
-    "api-test-dev": "mocha -r ts-node/register mocha/*.spec.ts --opts ./mocha/mocha.dev.opts ",
+    "api-test": "mocha -r ts-node/register mocha/*.spec.ts --opts ./mocha/mocha.dev.opts ",
     "webdriver-update": "webdriver-manager update",
     "webdriver-start": "webdriver-manager start --edge \"C:\\Program Files (x86)\\Microsoft Web Driver\\MicrosoftWebDriver.exe\"",
     "build": "webpack"
