@@ -1,4 +1,3 @@
-import { hello } from './hello-world';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -20,8 +19,6 @@ describe('Create and Delete challenge Api test', async () => {
   }));
 
   it('should return hello world', async () => {
-    const result = hello();
-    expect(result).to.equal('Hello world!');
     const user1: User = { userId: session.UId };
     const challenge: ChallengeResponse = await ChallengeApi.createChallengeGeneric(session, title, [user1], [user1]);
 

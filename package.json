@@ -12,7 +12,8 @@
     "e2e:qa": "ng e2e --no-serve --base-href=https://wwwqa.brainshark.com",
     "e2e:prod": "ng e2e --no-serve --base-href=https://www.brainshark.com",
     "e2e:vsts": "ng e2e --no-serve --config protractor.conf.browserstack.js",
-    "api-test": "mocha -r ts-node/register mocha/my-first-tests.spec.ts --reporter mocha-junit-reporter"
+    "api-test-qa": "mocha -r ts-node/register mocha/*.spec.ts --opts ./mocha/mocha.qa.opts",
+    "api-test-dev": "mocha -r ts-node/register mocha/*.spec.ts --opts ./mocha/mocha.dev.opts"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +44,8 @@
     "bluebird": "^3.5.1",
     "chai": "^4.1.2",
     "codelyzer": "~3.1.1",
+    "colors": "^1.1.2",
+    "dotenv": "^4.0.0",
     "emailjs-imap-client": "^2.0.8",
     "jasmine-core": "~2.6.2",
     "jasmine-reporters": "^2.2.1",

@@ -1,6 +1,6 @@
 import { TestUtils } from './../../../e2e/test-utils';
 import { Session } from './../../../e2e/apis/webservices-mobile/models/session-response.model';
-import { SerializationHelper } from './serialization-helper'
+import { SerializationHelper } from './serialization-helper';
 import * as request from 'request-promise';
 import { promise } from 'protractor';
 import { browser } from 'protractor';
@@ -10,7 +10,7 @@ export class Apibase {
 	constructor() { }
 
 	public static getBaseUrl(): string {
-		return 'https://wwwqa.brainshark.com/';
+		return process.env.BSK_BASE_URL;
 	}
 
 	private static async makeHttpGet(session: Session, url: string, queryStringParams?: any) {
