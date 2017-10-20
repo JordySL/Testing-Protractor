@@ -43,3 +43,4 @@ test-results.xml
 .DS_Store
 Thumbs.db
 junitresults.xml
+outputfiles/

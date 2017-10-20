@@ -7,7 +7,7 @@ import { TestUtils } from './../../../test-utils';
 import { Session } from './../../../apis/webservices-mobile/models/session-response.model';
 
 
-describe('Create and Delete challenge Api test',async () => {
+describe('Create and Delete challenge Api test', async () => {
 	
 		const title = 'New Challenge Title' + TestUtils.timestamp();
 		let session: Session;

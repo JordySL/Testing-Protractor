@@ -23,7 +23,7 @@ export class ChallengeApi extends Apibase {
 		const url = this.getCoachingChallengeUrl(session.UId);
 		const queryParams = {
 		}
-		let response = await Apibase.httpPostBsk(session, url, ChallengeResponse, challengePayload, queryParams);
+		let response = await Apibase.httpPostBsk(session, url, ChallengeResponse, challengePayload, null, queryParams);
 		return response[0];
 	}
 
@@ -31,7 +31,7 @@ export class ChallengeApi extends Apibase {
 		const url = this.getCoachingChallengeUrl(session.UId, challengeId);
 		const queryParams = {
 		}
-		let response = await Apibase.httpDeleteBsk(session, url, WsErrorResponse);
+		let response = await Apibase.httpDeleteBsk(session, url, WsErrorResponse, queryParams);
 		return response[0];
 	}
 
@@ -39,7 +39,7 @@ export class ChallengeApi extends Apibase {
 		const url = this.getCoachingChallengeUrl(session.UId);
 		const queryParams = {
 		}
-		let response = await Apibase.httpGetBsk(session, url, ChallengeResponse);
+		let response = await Apibase.httpGetBsk(session, url, ChallengeResponse, queryParams);
 		return response[0];
 	}
 
@@ -48,7 +48,7 @@ export class ChallengeApi extends Apibase {
 		const url = this.getCoachingChallengeUrl(session.UId, challengeId);
 		const queryParams = {
 		}
-		let response = await Apibase.httpGetBsk(session, url, ChallengeResponse);
+		let response = await Apibase.httpGetBsk(session, url, ChallengeResponse, queryParams);
 		return response[0];
 	}
 

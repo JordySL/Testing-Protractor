@@ -1,4 +1,4 @@
-import { MailHandlerService } from './../../../../src/mailhandler/mailhanlder.service';
+import { MailHandlerService, SubjectMatchType } from '../../../mailhandler/mailhandler.service';
 import { LogginPage } from './../../../pages/loggin.po';
 import { TestUtils } from './../../../test-utils';
 import { WsErrorResponse } from './../../../apis/common/wserror-response.model';
@@ -10,7 +10,8 @@ import { Session } from './../../../apis/webservices-mobile/models/session-respo
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
 
 
-describe('protractor-test App',async () => {
+
+describe('protractor-test App', async () => {
 	let page: LogginPage;
 	const title = 'New Challenge Title' + TestUtils.timestamp();
 	let session: Session;
@@ -20,7 +21,7 @@ describe('protractor-test App',async () => {
 		//jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
 		setTimeout(() => console.log('inside time out'), 500);
 		const mailHandler = new MailHandlerService();
-		const emails: any = await mailHandler.waitForEmailsBySubject('OK', 3, 60);
+		const emails: any = await mailHandler.waitForEmailsBySubject('OK', 3, 60, SubjectMatchType.Exact);
 		const emailsFound: any[] = emails.emails;
 		console.log(JSON.stringify(emailsFound));
 		console.log(JSON.stringify('Size: ' + emailsFound.length));
@@ -42,13 +43,13 @@ describe('protractor-test App',async () => {
 		const homePage = await page.login('admin', 'admin');
 
 		const coachingDashboard = await homePage.MasterNavBar.navigateToCoaching();
-		await coachingDashboard.search(title) ;
+		await coachingDashboard.search(title);
 		const s = await coachingDashboard.isFirstChallengeName(title);
 		await expect(s).toEqual(title);
 	});
 
 	afterEach(async () => {
-		const response: WsErrorResponse = await ChallengeApi.deleteChallenge(session,challengeId);
+		const response: WsErrorResponse = await ChallengeApi.deleteChallenge(session, challengeId);
 	});
 
 });
