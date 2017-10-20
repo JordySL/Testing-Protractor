@@ -8,7 +8,7 @@ export class LogginPage {
 	private btnLogin: ElementFinder = element(by.id('bntLogin'));
 
 	async navigateTo() {
-		await browser.get(browser.params.baseUrl + 'brainshark/public/login/m/login2.asp?companyid=20586');
+		await browser.get(process.env.BSK_BASE_URL + 'brainshark/public/login/m/login2.asp?companyid=20586');
 		return await browser.switchTo().frame(this.loginIframePosition);
 	}
 
