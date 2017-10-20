@@ -9,10 +9,8 @@ const BaseConfiguration = require('./protractor.conf.js');
 var browserStackConfiguration = {
 	browserstackUser: 'nolansullivan1',
 	browserstackKey: 'RvdDJJpxS1PY8iDzziwu',
-	capabilities: {
-		'browserName': 'chrome'
-	},
-	directConnect: false
+	directConnect: false,
+	seleniumAddress: null
 };
 
 var finalConfiguration = Object.assign({}, BaseConfiguration.config ,browserStackConfiguration);

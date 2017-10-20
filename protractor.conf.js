@@ -20,6 +20,7 @@ exports.config = {
 	},
 	directConnect: true, // When set to true, will run the local browser cirectly. Currently only works for chrome.
 						  // FOR DEBUGGING OTHER BROWSER LOCALLY: set this to false, verify the config field 'seleniumAddress', and run the command in the comment first
+	baseUrl: process.env.BSK_BASE_URL,
 	SELENIUM_PROMISE_MANAGER: false,
 	getPageTimeout: 60000,//change it based on your app response time
 	baseUrl: process.env.BSK_BASE_URL,
