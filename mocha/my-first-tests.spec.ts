@@ -6,7 +6,7 @@ import { SessionApi } from '../e2e/apis/session-api';
 import { ChallengeResponse } from '../e2e/apis/services.coaching/models/challenge-response';
 import { User } from '../e2e/apis/services.coaching/models/challenge-payload.model';
 import { ChallengeApi } from '../e2e/apis/services.coaching/challenge-api';
-import { TestUtils } from '../e2e/test-utils';
+import { TestUtils } from '../e2e/test-utilities/test-utils';
 import { WsErrorResponse } from '../e2e/apis/common/wserror-response.model';
 
 describe('Create and Delete challenge Api test', async () => {
