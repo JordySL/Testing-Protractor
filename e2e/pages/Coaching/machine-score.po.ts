@@ -13,7 +13,7 @@ export class MachineScorePage {
         browser.waitForAngularEnabled(false);
     }
 
-    async switchVersion(version: number) {
+    async switchVersion(version: number): Promise<void> {
 		const versionSelect = await browser.findElement(by.css('md-select[placeholder="Version"]'));
 		const mdSelect = new MdSelect(versionSelect);
 		await mdSelect.selectByText(version.toString());

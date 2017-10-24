@@ -17,13 +17,13 @@ export class LeaderBoardPage {
 		return new LeaderBoardPage();
 	}
 
-	public async switchToTableView() {
+	public async switchToTableView(): Promise<void> {
 		const el = await browser.findElement(by.id("md-tab-label-0-1"));
 		await el.click();
 		await browser.wait(ExpectedConditions.presenceOf(element(by.className('bsk-leaderboard'))), 5000);
 	}
 
-	public async getLeaderboardTableEntries() {
+	public async getLeaderboardTableEntries(): Promise<LeaderboardRow[]> {
 		let leaderboardRows: LeaderboardRow[]= [];
 		const table = await browser.findElement(by.ClassName("bsk-leaderboard"));
 		const body = await table.findElement(by.ClassName("datatable-body"));
