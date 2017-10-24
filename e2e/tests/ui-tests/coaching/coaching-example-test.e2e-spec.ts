@@ -17,6 +17,11 @@ describe('protractor-test App', async () => {
 	let session: Session;
 	let challengeId: number;
 
+	const username = process.env.BRAINSHARK_USESR_CHALLENGEMANAGER_USERNAME;
+	const password = process.env.BRAINSHARK_USESR_CHALLENGEMANAGER_PASSWORD;
+	const companyName = process.env.BRAINSHARK_COMPANY;
+	const companyId = process.env.BRAINSHARK_COMPANY_ID;
+
 	beforeEach(async () => {
 		//jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
 		setTimeout(() => console.log('inside time out'), 500);
@@ -26,7 +31,7 @@ describe('protractor-test App', async () => {
 		// console.log(JSON.stringify(emailsFound));
 		// console.log(JSON.stringify('Size: ' + emailsFound.length));
 
-		session = await SessionApi.getSession('admin', 'admin', 'nolan');
+		session = await SessionApi.getSession(username, password, companyName);
 
 		const user1: User = { userId: session.UId };
 		// Creating new challenge with Apis. For now, invite myself and add myself as a reviewer
@@ -39,8 +44,8 @@ describe('protractor-test App', async () => {
 
 	it('coaching POC', async () => {
 		await browser.waitForAngularEnabled(false);
-		await page.navigateTo();
-		const homePage = await page.login('admin', 'admin');
+		await page.navigateToCompanyId(companyId);
+		const homePage = await page.login(username, password);
 
 		const coachingDashboard = await homePage.MasterNavBar.navigateToCoaching();
 		await coachingDashboard.search(title);

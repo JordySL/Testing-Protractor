@@ -12,6 +12,9 @@
       console.log(colors.yellow('using: '),envPath);
       dotenv.config({
         path: envPath
+	  });
+	  dotenv.config({
+        path: './.env.common'
       });
       this.printBskConfiguration();
     }
