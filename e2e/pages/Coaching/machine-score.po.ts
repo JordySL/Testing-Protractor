@@ -1,3 +1,4 @@
+import { MdSelect } from './../Common/mdSelect';
 import { LeaderBoardPage } from './leaderboard.po';
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
 
@@ -10,14 +11,12 @@ export class MachineScorePage {
 
     constructor() {
         browser.waitForAngularEnabled(false);
-        // browser.wait(ExpectedConditions.visibilityOf(this.summary), 3000);
-        // const dropdowns = element.all(by.css('.mat-select-trigger'));
-        // this.participant = dropdowns.get(0);
-        // this.versionList = dropdowns.get(1);
     }
 
-    async switchVesion(version: number) {
-        // return this.versionList.click();
+    async switchVersion(version: number) {
+		const versionSelect = await browser.findElement(by.css('md-select[placeholder="Version"]'));
+		const mdSelect = new MdSelect(versionSelect);
+		await mdSelect.selectByText(version.toString());
     }
 
     async goToLeaderBoard() {
