@@ -30,11 +30,11 @@ export class LeaderBoardPage {
 		const rows = await body.findElements(by.ClassName("datatable-row-center"));
 		for(let row of rows)
 		{
-			var columns = await row.findElements(by.CssSelector("datatable-body-cell div"));
+			const columns = await row.findElements(by.CssSelector("datatable-body-cell div"));
 			const place: number = Number.parseInt(await columns[1].getText());
 			const name: string = await columns[2].getText();
-			const scoreText = await columns[2].getText(); 
-			const score: number = Number.parseInt((await columns[2].getText()).replace(" %",""));
+			const scoreText = await columns[3].getText(); 
+			const score: number = Number.parseInt((await columns[3].getText()).replace(" %",""));
 			const duration: string = await columns[4].getText();
 
 			leaderboardRows.push(new LeaderboardRow (place, name, score, duration));
