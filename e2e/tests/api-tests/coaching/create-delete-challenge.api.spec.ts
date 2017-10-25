@@ -13,27 +13,24 @@ describe('Create and Delete challenge Api test', async () => {
 		let session: Session;
 		let challengeId: number;
 	
-		beforeEach((async (done) => {
+		beforeEach((async () => {
 			jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
 			setTimeout(() => console.log('inside time out'), 500);
 	
 			session = await SessionApi.getSession('admin', 'admin', 'nolan');
-			done();
 		}));
 	
-		it('coaching POC', (async (done) => {
+		it('coaching POC', (async () => {
 			const user1: User = { userId: session.UId };
 			const challenge: ChallengeResponse = await ChallengeApi.createChallengeGeneric(session, title, [user1], [user1]);
 			await expect(challenge.id).not.toBeNull();
 			await expect(challenge.id).toBeGreaterThan(0);
 			challengeId = challenge.id;
 			
-			done();
 		}));
 	
-		afterEach((async (done) => {
+		afterEach((async () => {
 			const response: WsErrorResponse = await ChallengeApi.deleteChallenge(session,challengeId);
-			done();
 		}));
 	
 	});
