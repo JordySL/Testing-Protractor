@@ -7,7 +7,22 @@ const { JUnitXmlReporter } = require('jasmine-reporters');
 const  conf  = require('./environment-configuration.js').enviromentConfiguration;
 conf.configure(process.env.npm_config_server);
 
+// var chai = require('chai');
+// // var chaiAsPromised = require('chai-as-promised');
+// // chai.use(chaiAsPromised);
+
+// var expect = chai.expect;
+
 exports.config = {
+	plugins: [{
+        package: 'protractor-screenshoter-plugin',
+        screenshotPath: './REPORTS/e2e/screenshots',
+        screenshotOnExpect: 'failure+success',
+        screenshotOnSpec: 'none',
+        withLogs: 'true',
+        writeReportFreq: 'asap',
+        clearFoldersBeforeTest: true
+    }],
 	allScriptsTimeout: 60000,
 	specs: [
 		'./e2e/**/*.e2e-spec.ts'
@@ -38,9 +53,12 @@ exports.config = {
 
 		jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
 
-		jasmine.getEnv().addReporter(
-			new JUnitXmlReporter('test-results/JUnitXML/', true, true)
-		);
+		var junitReporter = new JUnitXmlReporter({
+			savePath: './REPORTS/e2e/JUnitXML/',
+			consolidateAll: true
+		});
+		jasmine.getEnv().addReporter(junitReporter);
+
 		browser.manage().timeouts().implicitlyWait(5000);
 	}
 };

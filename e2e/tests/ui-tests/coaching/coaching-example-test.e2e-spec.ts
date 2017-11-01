@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { MailHandlerService, SubjectMatchType } from '../../../test-utilities/mailhandler/mailhandler.service';
 import { LogginPage } from './../../../pages/loggin.po';
 import { TestUtils } from '../../../test-utilities/test-utils';
@@ -8,7 +9,6 @@ import { ChallengeResponse } from './../../../apis/services.coaching/models/chal
 import { SessionApi } from './../../../apis/session-api';
 import { Session } from './../../../apis/webservices-mobile/models/session-response.model';
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
-
 
 
 describe('protractor-test App', async () => {
@@ -50,7 +50,8 @@ describe('protractor-test App', async () => {
 		const coachingDashboard = await homePage.MasterNavBar.navigateToCoaching();
 		await coachingDashboard.search(title);
 		const s = await coachingDashboard.isFirstChallengeName(title);
-		await expect(s).toEqual(title);
+		
+		expect(s).to.be.equals(title);
 	});
 
 	afterEach(async () => {

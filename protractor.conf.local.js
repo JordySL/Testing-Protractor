@@ -18,9 +18,15 @@ var localConfiguration = {
 		});
 		jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
 
-		jasmine.getEnv().addReporter(
-			new JUnitXmlReporter('test-results/JUnitXML/', true, true)
-		);
+		var junitReporter = new JUnitXmlReporter({
+			savePath: './REPORTS/e2e/JUnitXML/',
+			consolidateAll: true
+		});
+		jasmine.getEnv().addReporter(junitReporter);
+
+		return global.browser.getProcessedConfig().then(function(config) {
+            //it is ok to be empty
+        });
 	}
 };
 
