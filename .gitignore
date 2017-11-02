@@ -32,7 +32,6 @@
 npm-debug.log
 testem.log
 /typings
-.env
 test-results.xml
 
 # e2e
