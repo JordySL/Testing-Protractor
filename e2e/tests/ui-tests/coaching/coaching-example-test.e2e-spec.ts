@@ -17,10 +17,10 @@ describe('protractor-test App', async () => {
 	let session: Session;
 	let challengeId: number;
 
-	const username = process.env.BRAINSHARK_USESR_CHALLENGEMANAGER_USERNAME;
-	const password = process.env.BRAINSHARK_USESR_CHALLENGEMANAGER_PASSWORD;
-	const companyName = process.env.BRAINSHARK_COMPANY;
-	const companyId = process.env.BRAINSHARK_COMPANY_ID;
+	const username = process.env.BRAINSHARK_USERS_CHALLENGEMANAGER_USERNAME;
+	const password = process.env.BRAINSHARK_USERS_CHALLENGEMANAGER_PASSWORD;
+	const companyName = process.env.BRAINSHARK_COMPANY_AUTO3;
+	const companyId = process.env.BRAINSHARK_COMPANY_AUTO3_ID;
 
 	beforeEach(async () => {
 		//jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;

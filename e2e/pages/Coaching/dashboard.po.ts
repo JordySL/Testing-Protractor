@@ -30,8 +30,8 @@ export class CoachingDashboardPage  {
 	}
 
 	async getDashboardRows(): Promise<WebElement[]> {
-		await browser.wait(ExpectedConditions.presenceOf(element(by.tagName('app-all-challenges-table'))), 10000, 'Timeout waiting for all challenges table');
-		const allChallengesTable = await browser.findElement(by.tagName('app-all-challenges-table'));
+		await browser.wait(ExpectedConditions.presenceOf(element(by.tagName('app-team-challenges-table'))), 10000, 'Timeout waiting for all challenges table');
+		const allChallengesTable = await browser.findElement(by.tagName('app-team-challenges-table'));
 		return await allChallengesTable.findElements(by.className('datatable-body-row'));
 	}
 
