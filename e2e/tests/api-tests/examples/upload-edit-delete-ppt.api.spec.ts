@@ -43,7 +43,7 @@ describe('Example test for uploading, editing and delting a presentation', async
 		form.description = 'Nolans New Description' + TestUtils.timestamp();
 		//Modifies the presentation and changes fields like title and description
 		const resp2: SavePresentationResponse = await SavePresentation.modifyPresentation(session, form);
-		await expect(resp.pid).toBe(resp.pid); // verify we get the same pid back
+		await expect(resp2.pid).toBe(resp.pid); // verify we get the same pid back
 
 		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid); // Checks the message of the delete call and returns a boolean if it was sucessfully deleted
 		//const deleteResponse = await PresentationApi.deletePresentation(session, resp.pid); //Returns the full message from the delete call
