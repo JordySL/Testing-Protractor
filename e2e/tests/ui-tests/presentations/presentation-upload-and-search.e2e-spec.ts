@@ -1,6 +1,5 @@
 import { expect } from 'chai';
-import { MailHandlerService, SubjectMatchType } from '../../../test-utilities/mailhandler/mailhandler.service';
-import { LogginPage } from './../../../pages/loggin.po';
+import { LoginPage } from './../../../pages/login.po';
 import { TestUtils } from '../../../test-utilities/test-utils';
 import { WsErrorResponse } from './../../../apis/common/wserror-response.model';
 import { PresentationApi } from './../../../apis/webservices-mobile/presentation-api';
@@ -10,12 +9,10 @@ import { SavePresentation } from './../../../apis/misc/savepresentation-api';
 import { SessionApi } from './../../../apis/session-api';
 import { Session } from './../../../apis/webservices-mobile/models/session-response.model'
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
-import { ChallengePayload, User } from './../../../apis/services.coaching/models/challenge-payload.model';
-import { ChallengeApi } from './../../../apis/services.coaching/challenge-api';
-import { ChallengeResponse } from './../../../apis/services.coaching/models/challenge-response';
+import { User } from './../../../apis/misc/models/user.model';
 
 describe('protractor-test App', async () => {
-	let page: LogginPage;
+	let page: LoginPage;
 	const presentation ='1slide.pptx';
 	let session: Session;
 	let presTitle: string;
@@ -45,7 +42,7 @@ describe('protractor-test App', async () => {
 		const resp2: SavePresentationResponse = await SavePresentation.modifyPresentation(session, form);
 		await expect(resp2.pid).to.be.equals(resp.pid); // verify we get the same pid back
 
-		page = await new LogginPage();
+		page = await new LoginPage();
 
 	}, 200000);
 

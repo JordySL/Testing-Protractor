@@ -24,6 +24,8 @@ export class MyContentPage {
       let presName: string;
       presName = await presLink.getText();
       isFound = presName === searchString;
+      if ( isFound)
+        break;
     }
 		return isFound;
 	}  

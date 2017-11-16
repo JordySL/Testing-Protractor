@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { MailHandlerService, SubjectMatchType } from '../../../test-utilities/mailhandler/mailhandler.service';
-import { LogginPage } from './../../../pages/loggin.po';
+import { LoginPage } from './../../../pages/login.po';
 import { TestUtils } from '../../../test-utilities/test-utils';
 import { WsErrorResponse } from './../../../apis/common/wserror-response.model';
 import { ChallengePayload, User } from './../../../apis/services.coaching/models/challenge-payload.model';
@@ -12,7 +12,7 @@ import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } f
 
 
 describe('protractor-test App', async () => {
-	let page: LogginPage;
+	let page: LoginPage;
 	const title = 'New Challenge Title' + TestUtils.timestamp();
 	let session: Session;
 	let challengeId: number;
@@ -25,11 +25,11 @@ describe('protractor-test App', async () => {
 	beforeEach(async () => {
 		//jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
 		setTimeout(() => console.log('inside time out'), 500);
-		// const mailHandler = new MailHandlerService();
-		// const emails: any = await mailHandler.waitForEmailsBySubject('OK', 3, 60, SubjectMatchType.Exact);
-		// const emailsFound: any[] = emails.emails;
-		// console.log(JSON.stringify(emailsFound));
-		// console.log(JSON.stringify('Size: ' + emailsFound.length));
+		const mailHandler = new MailHandlerService();
+		const emails: any = await mailHandler.waitForEmailsBySubject('OK', 3, 60, SubjectMatchType.Exact);
+		const emailsFound: any[] = emails.emails;
+		console.log(JSON.stringify(emailsFound));
+		console.log(JSON.stringify('Size: ' + emailsFound.length));
 
 		session = await SessionApi.getSession(username, password, companyName);
 
@@ -38,7 +38,7 @@ describe('protractor-test App', async () => {
 		const challenge: ChallengeResponse = await ChallengeApi.createChallengeGeneric(session, title, [user1], [user1]);
 		challengeId = challenge.id;
 
-		page = await new LogginPage();
+		page = await new LoginPage();
 
 	}, 200000);
 

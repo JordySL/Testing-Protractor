@@ -1,7 +1,7 @@
 import { HomePage } from './Home/home.po';
 import { browser, by, element, WebElement, ElementFinder } from 'protractor';
 
-export class LogginPage {
+export class LoginPage {
 	private loginIframePosition = 0;
 	private username: ElementFinder = element(by.id('txtUserName'));
 	private password: ElementFinder = element(by.id('txtPassword'));
