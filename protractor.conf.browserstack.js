@@ -7,8 +7,8 @@ const { JUnitXmlReporter } = require('jasmine-reporters');
 const BaseConfiguration = require('./protractor.conf.js');
 
 var browserStackConfiguration = {
-	browserstackUser: 'nolansullivan1',
-	browserstackKey: 'RvdDJJpxS1PY8iDzziwu',
+	browserstackUser: 'brianshark',
+	browserstackKey: 'sDW8y52boodzSU0CNiCr',
 	directConnect: false,
 	seleniumAddress: null
 };
