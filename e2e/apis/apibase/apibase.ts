@@ -23,7 +23,8 @@ export class Apibase {
 			url: url,
 			method: 'GET',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
+				'Brainshark-STok': session.SessionToken
 			},
 			rejectUnauthorized: false, // Lets us hit our local machines with certificate issues
 			qs: queryStringParams,

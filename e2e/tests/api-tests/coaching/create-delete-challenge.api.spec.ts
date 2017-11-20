@@ -14,9 +14,8 @@ describe('Create and Delete challenge Api test', async () => {
 		let challengeId: number;
 	
 		beforeEach((async () => {
-			jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
 			setTimeout(() => console.log('inside time out'), 500);
-	
+
 			session = await SessionApi.getSession('admin', 'admin', 'nolan');
 		}));
 	
