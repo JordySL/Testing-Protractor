@@ -19,8 +19,7 @@ describe('Example test for uploading, editing and delting a presentation', async
 
 	beforeEach(async (done) => {
 		session = await SessionApi.getSession(username, password, loginDir);
-		done();
-	}, 200000);
+	});
 
 	it('create and edit a presentation, then delete it', async () => {
 
