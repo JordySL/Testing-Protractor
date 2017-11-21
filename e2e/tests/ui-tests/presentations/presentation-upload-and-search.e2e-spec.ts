@@ -13,10 +13,9 @@ import { User } from './../../../apis/misc/models/user.model';
 
 describe('protractor-test App', async () => {
 	let page: LoginPage;
-	const presentation ='1slide.pptx';
+	const presentation = '1slide.pptx';
 	let session: Session;
 	let presTitle: string;
-	let challengeId: number;
 	let resp: SavePresentationResponse;
 
 	const username = process.env.BRAINSHARK_USERS_PRINCIPAL_USERNAME;
@@ -29,13 +28,13 @@ describe('protractor-test App', async () => {
 		session = await SessionApi.getSession(username, password, companyName);
 		const user1: User = { userId: session.UId };
 		const file = TestUtils.getFilePath(presentation);
-		
-		//Uploads a file like a pptx to be converted as a brainshark and waits for conversion
-		resp = await SavePresentation.uploadPresentation(session, file); 
+
+		// Uploads a file like a pptx to be converted as a brainshark and waits for conversion
+		resp = await SavePresentation.uploadPresentation(session, file);
 		await expect(resp.pid).to.be.greaterThan(0);
 
-		let form = new SavePresentationForm();
-		form.pid = resp.pid;// Set the pid of the pres we want to edit
+		const form = new SavePresentationForm();
+		form.pid = resp.pid; // Set the pid of the pres we want to edit
 		presTitle = 'SearchForMe' + TestUtils.timestamp();
 		form.title = presTitle;
 		form.description = 'This is the interesting description of the presentation - ' + presTitle;
@@ -56,8 +55,9 @@ describe('protractor-test App', async () => {
 	});
 
 	afterEach(async () => {
-		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid); // Checks the message of the delete call and returns a boolean if it was sucessfully deleted
-		await expect(deleteResponse).to.be.true;// verify delete was successful
+		// Checks the message of the delete call and returns a boolean if it was sucessfully deleted
+		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid);
+		await expect(deleteResponse).to.be.true; // verify delete was successful
 	});
 
 });

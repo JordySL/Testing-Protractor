@@ -7,10 +7,9 @@ import { SavePresentationResponse } from './../../../apis/misc/models/savepresen
 import { SavePresentation } from './../../../apis/misc/savepresentation-api';
 import { TestUtils } from '../../../test-utilities/test-utils';
 import { SessionApi } from './../../../apis/session-api';
-import { Session } from './../../../apis/webservices-mobile/models/session-response.model'
+import { Session } from './../../../apis/webservices-mobile/models/session-response.model';
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
-
-
+import { expect } from 'chai';
 
 describe('Example test for uploading, editing and delting a presentation', async () => {
 	let session: Session;
@@ -27,25 +26,23 @@ describe('Example test for uploading, editing and delting a presentation', async
 
 		const file = TestUtils.getFilePath('1slide.pptx');
 
-		//Uploads a file like a pptx to be converted as a brainshark and waits for conversion
-		const  resp: SavePresentationResponse = await SavePresentation.uploadPresentation(session, file); 
-		await expect(resp.pid).toBeGreaterThan(0);
+		// Uploads a file like a pptx to be converted as a brainshark and waits for conversion
+		const  resp: SavePresentationResponse = await SavePresentation.uploadPresentation(session, file);
+		expect(resp.pid).to.be.greaterThan(0);
 
-		let form = new SavePresentationForm();
-		form.pid = resp.pid;// Set the pid of the pres we want to edit
+		const form = new SavePresentationForm();
+		form.pid = resp.pid; // Set the pid of the pres we want to edit
 		form.title = 'Nolans New Title' + TestUtils.timestamp();
 		form.description = 'Nolans New Description' + TestUtils.timestamp();
-		//Modifies the presentation and changes fields like title and description
+		// Modifies the presentation and changes fields like title and description
 		const resp2: SavePresentationResponse = await SavePresentation.modifyPresentation(session, form);
-		await expect(resp2.pid).toBe(resp.pid); // verify we get the same pid back
+		expect(resp2.pid).to.be.equals(resp.pid); // verify we get the same pid back
 
-		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid); // Checks the message of the delete call and returns a boolean if it was sucessfully deleted
-		//const deleteResponse = await PresentationApi.deletePresentation(session, resp.pid); //Returns the full message from the delete call
-		await expect(deleteResponse).toBe(true);// verify delete was successful
+		// Checks the message of the delete call and returns a boolean if it was sucessfully deleted
+		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid);
+
+		expect(deleteResponse).to.be.equals(true); // verify delete was successful
 	});
 
-	afterEach(async () => {
-
-	});
 
 });

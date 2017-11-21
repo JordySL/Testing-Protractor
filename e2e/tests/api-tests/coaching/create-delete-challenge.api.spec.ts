@@ -8,7 +8,7 @@ import { User } from './../../../apis/services.coaching/models/challenge-payload
 import { SessionApi } from './../../../apis/session-api';
 import { TestUtils } from '../../../test-utilities/test-utils';
 import { Session } from './../../../apis/webservices-mobile/models/session-response.model';
-
+import { expect } from 'chai';
 
 describe('Create and Delete challenge Api test', async () => {
 	
@@ -28,8 +28,8 @@ describe('Create and Delete challenge Api test', async () => {
 		it('coaching POC', (async () => {
 			const user1: User = { userId: session.UId };
 			const challenge: ChallengeResponse = await ChallengeApi.createChallengeGeneric(session, title, [user1], [user1]);
-			await expect(challenge.id).not.toBeNull();
-			await expect(challenge.id).toBeGreaterThan(0);
+			await expect(challenge.id).exist;
+			await expect(challenge.id).to.be.greaterThan(0);
 			challengeId = challenge.id;
 
 			const mailHandler = new MailHandlerService();
@@ -38,8 +38,7 @@ describe('Create and Delete challenge Api test', async () => {
 			let email = emailsFound[0];
 			let parsedEmail = email.parsedBody;
 			const searchResult = parsedEmail.text.search('Brainshark for Coaching helps you and your manager refine your sales skills. Follow the link to view the challenge details and upload the requested content. Your manager will review it and provide feedback and support.');
-			await expect(searchResult).not.toEqual(-1);
-
+			await expect(searchResult).not.equal(-1);
 			// Download attachments if email has them
 			//email.downloadAttachment(0, true);
 			

@@ -9,8 +9,10 @@
     "e2e": "ng e2e --no-serve",
     "e2e:local": "ng e2e --no-serve --config protractor.conf.local.js",
     "e2e:vsts": "ng e2e --no-serve --config protractor.conf.browserstack.js",
-    "api-test-vsts": "mocha -r ts-node/register mocha/*.spec.ts --opts ./mocha/mocha.vsts.opts",
-    "api-test": "mocha -r ts-node/register mocha/*.spec.ts --opts ./mocha/mocha.dev.opts ",
+    "api-test-vsts": "mocha -r ts-node/register e2e/tests/api-tests/**/*.spec.ts --opts ./mocha/mocha.vsts.opts",
+    "api-test-grep-vsts": "mocha -r ts-node/register --opts ./mocha/mocha.vsts.opts",
+    "api-test": "mocha -r ts-node/register e2e/tests/api-tests/**/*.spec.ts --opts ./mocha/mocha.dev.opts ",
+    "api-test-grep": "mocha -r ts-node/register --opts ./mocha/mocha.dev.opts ",
     "webdriver-update": "webdriver-manager update",
     "webdriver-start": "webdriver-manager start --edge \"C:\\Program Files (x86)\\Microsoft Web Driver\\MicrosoftWebDriver.exe\"",
     "build": "webpack"
@@ -70,6 +72,7 @@
     "request-promise": "^4.2.2",
     "ts-node": "^3.2.2",
     "tslint": "~5.3.2",
+    "tslint-no-unused-expression-chai": "0.0.3",
     "typescript": "~2.3.3"
   }
 }
