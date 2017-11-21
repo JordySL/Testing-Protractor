@@ -13,50 +13,46 @@ describe('Get User Api test', async () => {
 	const username = process.env.BRAINSHARK_USERS_APIUSER1_USERNAME;
 	const password = process.env.BRAINSHARK_USERS_APIUSER1_PASSWORD;
 	const apiVersion = process.env.BRAINSHARK_SERVICES_COMMON_API_VERSION;
-	
-	let session: Session;
-	
-	beforeEach((async () => {
-		setTimeout(() => console.log('inside time out'), 500);
 
+	let session: Session;
+
+	beforeEach((async () => {
 		session = await SessionApi.getSession(username, password, companyName);
 	}));
-	
+
 	it('Get User', (async () => {
 		const userApiResponse: UserResponse = await UserApi.getUser(session, apiVersion);
-		await expect(userApiResponse.FullName).to.be.equals('api First Name api Last Name');
-		await expect(userApiResponse.Email).to.be.equals('qaauto1+apiuser1@brainshark.com');
-		await expect(userApiResponse.CompanyName).to.be.equals('AutomationInc');
-		await expect(userApiResponse.isActive).to.be.true;		
-		await expect(userApiResponse.Bio).to.be.equals('Raised in forest\r\nused to be hungry very often');;		
-		await expect(userApiResponse.Address1).to.be.equals('123 Sunny Hill');
-		await expect(userApiResponse.Address2).to.be.equals('apartment 666');
-		await expect(userApiResponse.State).to.be.equals('MA');
-		await expect(userApiResponse.Country).to.be.equals('USA');
-		await expect(userApiResponse.PostalCode).to.be.equals('12345');
-		await expect(userApiResponse.Phone).to.be.equals('+13333333333');
-		await expect(userApiResponse.Custom1).to.be.equals('one');
-		await expect(userApiResponse.Custom2).to.be.equals('two');
-		await expect(userApiResponse.Custom3).to.be.equals('three');
-		await expect(userApiResponse.Custom4).to.be.equals('four');
-		await expect(userApiResponse.Custom5).to.be.equals('five');
-		await expect(userApiResponse.Custom6).to.be.equals('six');
-		await expect(userApiResponse.Custom7).to.be.equals('seven');
-		await expect(userApiResponse.Custom8).to.be.equals('eight');
-		await expect(userApiResponse.Custom9).to.be.equals('nine');
-		await expect(userApiResponse.Custom10).to.be.equals('ten');
-		await expect(userApiResponse.Username).to.be.equals('apiuser1');
-		await expect(userApiResponse.Title).to.be.equals('Master');
-		await expect(userApiResponse.IsLocked).to.be.false;		
-		await expect(userApiResponse.Id).to.be.equals(parseInt(process.env.BRAINSHARK_USERS_APIUSER1_ID));
-		await expect(userApiResponse.PhotoUrl).to.contain('brainshark.com/brainshark/brainshark.net/apppresentation/GetBGImage.aspx');
-		await expect(userApiResponse.CompanyId).to.be.equals(parseInt(process.env.BRAINSHARK_COMPANY_ID));
-		await expect(userApiResponse.WebsiteUrl).to.be.equals('http://www.mysite.test');
-		await expect(userApiResponse.UserImageId).to.be.greaterThan(0);
+		expect(userApiResponse.FullName).to.be.equals('api First Name api Last Name');
+		expect(userApiResponse.Email).to.be.equals('qaauto1+apiuser1@brainshark.com');
+		expect(userApiResponse.CompanyName).to.be.equals('AutomationInc');
+		expect(userApiResponse.isActive).to.be.true;
+		expect(userApiResponse.Bio).to.be.equals('Raised in forest\r\nused to be hungry very often');
+		expect(userApiResponse.Address1).to.be.equals('123 Sunny Hill');
+		expect(userApiResponse.Address2).to.be.equals('apartment 666');
+		expect(userApiResponse.State).to.be.equals('MA');
+		expect(userApiResponse.Country).to.be.equals('USA');
+		expect(userApiResponse.PostalCode).to.be.equals('12345');
+		expect(userApiResponse.Phone).to.be.equals('+13333333333');
+		expect(userApiResponse.Custom1).to.be.equals('one');
+		expect(userApiResponse.Custom2).to.be.equals('two');
+		expect(userApiResponse.Custom3).to.be.equals('three');
+		expect(userApiResponse.Custom4).to.be.equals('four');
+		expect(userApiResponse.Custom5).to.be.equals('five');
+		expect(userApiResponse.Custom6).to.be.equals('six');
+		expect(userApiResponse.Custom7).to.be.equals('seven');
+		expect(userApiResponse.Custom8).to.be.equals('eight');
+		expect(userApiResponse.Custom9).to.be.equals('nine');
+		expect(userApiResponse.Custom10).to.be.equals('ten');
+		expect(userApiResponse.Username).to.be.equals('apiuser1');
+		expect(userApiResponse.Title).to.be.equals('Master');
+		expect(userApiResponse.IsLocked).to.be.false;
+		expect(userApiResponse.Id).to.be.equals(parseInt(process.env.BRAINSHARK_USERS_APIUSER1_ID, 10));
+		expect(userApiResponse.PhotoUrl).to.contain('brainshark.com/brainshark/brainshark.net/apppresentation/GetBGImage.aspx');
+		expect(userApiResponse.CompanyId).to.be.equals(parseInt(process.env.BRAINSHARK_COMPANY_ID, 10));
+		expect(userApiResponse.WebsiteUrl).to.be.equals('http://www.mysite.test');
+		expect(userApiResponse.UserImageId).to.be.greaterThan(0);
 	}));
-	
-	afterEach((async () => {
-	}));
-	
+
+
 });
-	
+

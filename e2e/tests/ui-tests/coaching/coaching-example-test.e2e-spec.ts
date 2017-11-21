@@ -23,8 +23,6 @@ describe('protractor-test App', async () => {
 	const companyId = process.env.BRAINSHARK_COMPANY_AUTO3_ID;
 
 	beforeEach(async () => {
-		//jasmine.DEFAULT_TIMEOUT_INTERVAL = 80000;
-		setTimeout(() => console.log('inside time out'), 500);
 		const mailHandler = new MailHandlerService();
 		const emails: any = await mailHandler.waitForEmailsBySubject('OK', 3, 60, SubjectMatchType.Exact);
 		const emailsFound: any[] = emails.emails;
@@ -50,7 +48,6 @@ describe('protractor-test App', async () => {
 		const coachingDashboard = await homePage.MasterNavBar.navigateToCoaching();
 		await coachingDashboard.search(title);
 		const s = await coachingDashboard.isFirstChallengeName(title);
-		
 		expect(s).to.be.equals(title);
 	});
 
