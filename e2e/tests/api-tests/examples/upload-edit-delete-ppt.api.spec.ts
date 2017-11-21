@@ -14,18 +14,12 @@ import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } f
 
 describe('Example test for uploading, editing and delting a presentation', async () => {
 	let session: Session;
+	const username = process.env.BRAINSHARK_USERS_AUTHOR1_USERNAME;
+	const password = process.env.BRAINSHARK_USERS_AUTHOR1_PASSWORD;
+	const loginDir = process.env.BRAINSHARK_COMPANY;
 
 	beforeEach(async (done) => {
-		setTimeout(() => console.log('inside time out'), 500);
-		const mailHandler = new MailHandlerService();
-		const emails:Emails = await mailHandler.waitForEmailsBySubject('OK', 1, 60, SubjectMatchType.Exact);
-		const emailsFound: Email[] = emails.emails;
-		let email = emailsFound[0];
-		let parsedEmail = email.parsedBody;
-		
-		email.downloadAttachment(0, true);
-
-		session = await SessionApi.getSession('admin', 'admin', 'testnolan2');
+		session = await SessionApi.getSession(username, password, loginDir);
 		done();
 	}, 200000);
 

@@ -12,11 +12,14 @@ describe('Create and Delete challenge Api test', async () => {
 		const title = 'New Challenge Title' + TestUtils.timestamp();
 		let session: Session;
 		let challengeId: number;
+		const username = process.env.BRAINSHARK_USERS_CHALLENGEMANAGER_USERNAME;
+		const password = process.env.BRAINSHARK_USERS_CHALLENGEMANAGER_PASSWORD;
+		const loginDir = process.env.BRAINSHARK_COMPANY;
 	
 		beforeEach((async () => {
 			setTimeout(() => console.log('inside time out'), 500);
 
-			session = await SessionApi.getSession('admin', 'admin', 'nolan');
+			session = await SessionApi.getSession(username, password, loginDir);
 		}));
 	
 		it('coaching POC', (async () => {
