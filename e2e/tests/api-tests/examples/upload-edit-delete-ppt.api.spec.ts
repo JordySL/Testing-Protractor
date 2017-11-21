@@ -13,18 +13,14 @@ import { expect } from 'chai';
 
 describe('Example test for uploading, editing and delting a presentation', async () => {
 	let session: Session;
+	const username = process.env.BRAINSHARK_USERS_AUTHOR1_USERNAME;
+	const password = process.env.BRAINSHARK_USERS_AUTHOR1_PASSWORD;
+	const loginDir = process.env.BRAINSHARK_COMPANY;
 
-	beforeEach(async () => {
-		// const mailHandler = new MailHandlerService();
-		// const emails: Emails = await mailHandler.waitForEmailsBySubject('OK', 1, 60, SubjectMatchType.Exact);
-		// const emailsFound: Email[] = emails.emails;
-		// const email = emailsFound[0];
-		// const parsedEmail = email.parsedBody;
-
-		// await email.downloadAttachment(0, true);
-
-		session = await SessionApi.getSession('admin', 'admin', 'testnolan2');
-	});
+	beforeEach(async (done) => {
+		session = await SessionApi.getSession(username, password, loginDir);
+		done();
+	}, 200000);
 
 	it('create and edit a presentation, then delete it', async () => {
 
