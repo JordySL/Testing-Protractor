@@ -17,7 +17,7 @@ describe('Example test for uploading, editing and delting a presentation', async
 	const password = process.env.BRAINSHARK_USERS_AUTHOR1_PASSWORD;
 	const loginDir = process.env.BRAINSHARK_COMPANY;
 
-	beforeEach(async (done) => {
+	beforeEach(async () => {
 		session = await SessionApi.getSession(username, password, loginDir);
 	});
 
