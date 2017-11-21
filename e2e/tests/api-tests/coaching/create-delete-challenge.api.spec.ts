@@ -14,7 +14,7 @@ describe('Create and Delete challenge Api test', async () => {
 		let challengeId: number;
 		const username = process.env.BRAINSHARK_USERS_CHALLENGEMANAGER_USERNAME;
 		const password = process.env.BRAINSHARK_USERS_CHALLENGEMANAGER_PASSWORD;
-		const loginDir = process.env.BRAINSHARK_COMPANY;
+		const loginDir = process.env.BRAINSHARK_COMPANY3;
 	
 		beforeEach((async () => {
 			setTimeout(() => console.log('inside time out'), 500);
