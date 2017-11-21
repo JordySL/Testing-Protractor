@@ -1,3 +1,6 @@
+import { Email } from './../../../test-utilities/mailhandler/emails.email.model';
+import { Emails } from './../../../test-utilities/mailhandler/emails.model';
+import { MailHandlerService, SubjectMatchType } from './../../../test-utilities/mailhandler/mailhandler.service';
 import { WsErrorResponse } from './../../../apis/common/wserror-response.model';
 import { ChallengeApi } from './../../../apis/services.coaching/challenge-api';
 import { ChallengeResponse } from './../../../apis/services.coaching/models/challenge-response';
@@ -28,6 +31,17 @@ describe('Create and Delete challenge Api test', async () => {
 			await expect(challenge.id).not.toBeNull();
 			await expect(challenge.id).toBeGreaterThan(0);
 			challengeId = challenge.id;
+
+			const mailHandler = new MailHandlerService();
+			const emails:Emails = await mailHandler.waitForEmailsBySubject(`Coaching - Challenge Invitation:${title}`, 1, 60, SubjectMatchType.Exact);
+			const emailsFound: Email[] = emails.emails;
+			let email = emailsFound[0];
+			let parsedEmail = email.parsedBody;
+			const searchResult = parsedEmail.text.search('Brainshark for Coaching helps you and your manager refine your sales skills. Follow the link to view the challenge details and upload the requested content. Your manager will review it and provide feedback and support.');
+			await expect(searchResult).not.toEqual(-1);
+
+			// Download attachments if email has them
+			//email.downloadAttachment(0, true);
 			
 		}));
 	
