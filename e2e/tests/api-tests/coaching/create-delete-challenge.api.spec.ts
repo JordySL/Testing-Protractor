@@ -17,13 +17,11 @@ describe('Create and Delete challenge Api test', async () => {
 		let challengeId: number;
 		const username = process.env.BRAINSHARK_USERS_CHALLENGEMANAGER_USERNAME;
 		const password = process.env.BRAINSHARK_USERS_CHALLENGEMANAGER_PASSWORD;
-		const loginDir = process.env.BRAINSHARK_COMPANY3;
+		const loginDir = process.env.BRAINSHARK_COMPANY_AUTO3;
 	
-		beforeEach((async () => {
-			setTimeout(() => console.log('inside time out'), 500);
-
+		beforeEach(async () => {
 			session = await SessionApi.getSession(username, password, loginDir);
-		}));
+		});
 	
 		it('coaching POC', (async () => {
 			const user1: User = { userId: session.UId };
@@ -33,7 +31,7 @@ describe('Create and Delete challenge Api test', async () => {
 			challengeId = challenge.id;
 
 			const mailHandler = new MailHandlerService();
-			const emails:Emails = await mailHandler.waitForEmailsBySubject(`Coaching - Challenge Invitation:${title}`, 1, 60, SubjectMatchType.Exact);
+			const emails:Emails = await mailHandler.waitForEmailsBySubject(`Coaching - Challenge Invitation: ${title}`, 1, 60, SubjectMatchType.Exact);
 			const emailsFound: Email[] = emails.emails;
 			let email = emailsFound[0];
 			let parsedEmail = email.parsedBody;
