@@ -46,18 +46,20 @@ describe('protractor-test App', async () => {
 	}, 200000);
 
 	it('Should return presentation when searching from My Content', async () => {
+		let presentationFound: boolean;
 		await browser.waitForAngularEnabled(false);
 		await page.navigateToCompanyId(companyId);
 		const homePage = await page.login(username, password);
 		const myContent = await homePage.MasterNavBar.navigateToMyContent();
 		await myContent.MasterNavBar.searchMyContent(presTitle);
-		await expect(await myContent.isPresentationPresent(presTitle)).to.be.true;
+		presentationFound = await myContent.isPresentationPresent(presTitle);
+		expect(presentationFound).to.be.true;
 	});
 
 	afterEach(async () => {
 		// Checks the message of the delete call and returns a boolean if it was sucessfully deleted
 		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid);
-		await expect(deleteResponse).to.be.true; // verify delete was successful
+		expect(deleteResponse).to.be.true; // verify delete was successful
 	});
 
 });

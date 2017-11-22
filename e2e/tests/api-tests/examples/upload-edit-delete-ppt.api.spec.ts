@@ -11,7 +11,7 @@ import { Session } from './../../../apis/webservices-mobile/models/session-respo
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
 import { expect } from 'chai';
 
-describe('Example test for uploading, editing and delting a presentation', async () => {
+describe('Example test for uploading, editing and deleting a presentation', async () => {
 	let session: Session;
 	const username = process.env.BRAINSHARK_USERS_AUTHOR1_USERNAME;
 	const password = process.env.BRAINSHARK_USERS_AUTHOR1_PASSWORD;
