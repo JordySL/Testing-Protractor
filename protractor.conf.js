@@ -27,9 +27,16 @@ exports.config = {
 	specs: [
 		'./e2e/**/*.e2e-spec.ts'
 	],
-	capabilities: {
-		'browserName': 'chrome' //chrome, firefox, MicrosoftEdge
-	},
+	// multiCapabilities: [
+	// 	{'browserName': 'firefox'},
+	// 	{'browserName': 'chrome'},
+	// 	{'browserName': 'microsoftedge'},
+	// 	{'browserName': 'internet explorer'}
+	// ],	
+	multiCapabilities: [
+		{'browserName': 'chrome'}
+	],	
+	
 	params: {
 		baseUrl: process.env.BSK_BASE_URL
 	},
@@ -39,7 +46,11 @@ exports.config = {
 	SELENIUM_PROMISE_MANAGER: false,
 	getPageTimeout: 60000,//change it based on your app response time
 	baseUrl: process.env.BSK_BASE_URL,
-	seleniumAddress: 'http://127.0.0.1:4444/wd/hub', // run 'npm run webdriver-start' to start the server
+	//For Edge
+	//seleniumAddress: 'http://localhost:17556/', // run downloaded Edge driver to start the server
+
+	//For Firefox & Chrome
+	seleniumAddress: 'http://127.0.0.1:4444/wd/hub', // run 'npm run webdriver-start' for firefox to start the server
 	framework: 'jasmine',
 	jasmineNodeOpts: {
 		showColors: true,
