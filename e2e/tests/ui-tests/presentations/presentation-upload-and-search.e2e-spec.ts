@@ -31,7 +31,7 @@ describe('protractor-test App', async () => {
 
 		// Uploads a file like a pptx to be converted as a brainshark and waits for conversion
 		resp = await SavePresentation.uploadPresentation(session, file);
-		await expect(resp.pid).to.be.greaterThan(0);
+		expect(resp.pid).to.be.greaterThan(0);
 
 		const form = new SavePresentationForm();
 		form.pid = resp.pid; // Set the pid of the pres we want to edit
@@ -39,9 +39,9 @@ describe('protractor-test App', async () => {
 		form.title = presTitle;
 		form.description = 'This is the interesting description of the presentation - ' + presTitle;
 		const resp2: SavePresentationResponse = await SavePresentation.modifyPresentation(session, form);
-		await expect(resp2.pid).to.be.equals(resp.pid); // verify we get the same pid back
+		expect(resp2.pid).to.be.equals(resp.pid); // verify we get the same pid back
 
-		page = await new LoginPage();
+		page = new LoginPage();
 
 	}, 200000);
 

@@ -10,7 +10,7 @@
     "e2e:local": "ng e2e --no-serve --config protractor.conf.local.js",
     "e2e:vsts-browserstack": "ng e2e --no-serve --config protractor.conf.browserstack.js",
     "e2e:vsts-vsts": "ng e2e --no-serve --config protractor.conf.browserstack.js",
-    "e2e:vsts-sauce": "ng e2e --no-serve --config protractor.conf.saucelabs.js",    
+    "e2e:vsts-sauce": "ng e2e --no-serve --config protractor.conf.saucelabs.js",
     "api-test-vsts": "mocha -r ts-node/register e2e/tests/api-tests/**/*.spec.ts --opts ./mocha/mocha.vsts.opts",
     "api-test-grep-vsts": "mocha -r ts-node/register --opts ./mocha/mocha.vsts.opts",
     "api-test": "mocha -r ts-node/register e2e/tests/api-tests/**/*.spec.ts --opts ./mocha/mocha.dev.opts ",
@@ -75,6 +75,7 @@
     "ts-node": "^3.2.2",
     "tslint": "~5.3.2",
     "tslint-no-unused-expression-chai": "0.0.3",
-    "typescript": "~2.3.3"
+    "typescript": "~2.3.3",
+    "yargs": "^10.0.3"
   }
 }

@@ -7,6 +7,13 @@
 
     }
 
+    static configureFromCommandArguments(){
+      const conf = require('./environment-configuration.js').enviromentConfiguration;
+      const argv = require('yargs').argv
+      const environment = process.env.npm_config_server || argv.server
+      this.configure(environment);
+    }
+
     static configure(envName) {
       const envPath = envName ? `./.env.${envName}` : null;
       console.log(colors.yellow('using: '),envPath);
