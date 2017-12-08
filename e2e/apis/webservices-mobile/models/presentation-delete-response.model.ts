@@ -1,3 +1,3 @@
 export class PresentationDeleteResponse {
-	public Message: string; //delete message
+	public Message: string;
 }
