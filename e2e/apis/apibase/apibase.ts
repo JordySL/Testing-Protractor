@@ -46,17 +46,17 @@ export class Apibase {
 		return request({
 			url: url,
 			method: 'POST',
-			headers: {
-				'content-type': 'application/json' // might not want to hardcode this
-			},
+			headers: (<any>Object).assign(
+				{ 'content-type': 'application/json' },
+				session && { 'Brainshark-STok': session.SessionToken }
+			),
 			rejectUnauthorized: false, // Lets us hit our local machines with certificate issues
 			qs: queryStringParams,
 			json: true,
-			body: requestBody ? requestBody : null,
-			form: form ? form : null
+			body: requestBody && requestBody,
+			form: form && form
 		});
 	}
-
 
 	private static httpFileSend(session: Session, method: string, url: string, pathToFile: string, queryStringParams: any): request.RequestPromise {
 
@@ -123,9 +123,9 @@ export class Apibase {
 	}
 
 
-	static async httpGet<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any) {
+	static async httpGet<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any, logResponse: boolean = false) {
 		let response = await this.makeHttpGet(session, url, queryStringParams);
-		TestUtils.log('GET call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
+		logResponse && TestUtils.log('GET call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		return SerializationHelper.toInstance(new responseClass(), response);
 	}
 
@@ -145,9 +145,9 @@ export class Apibase {
 	}
 
 	// This call is for all other calls that don't return the brainsahrk response json.
-	static async httpPost<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any): Promise<T> {
+	static async httpPost<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any, logResponse: boolean = false): Promise<T> {
 		let response = await this.makeHttpPost(session, url, jsonBody, form, queryStringParams);
-		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
+		logResponse && TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
 		return SerializationHelper.toInstance(new responseClass(), response);
 	}
 
