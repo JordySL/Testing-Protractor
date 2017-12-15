@@ -15,11 +15,11 @@ export class LearningApi extends Apibase {
 
 	public static async getCourseEnrollments(session: Session, apiVersion: string, queryParams: Object): Promise<any> {
 		const url = this.getCourseEnrollmentsUrl(apiVersion);
-		return await Apibase.httpGet(session, url, Object, queryParams, true, true);
+		return await Apibase.httpGet(session, url, null, queryParams, true, true);
 	}
 
-  public static async getCurriculumEnrollments(session: Session, apiVersion: string, queryParams: Object): Promise<Object> { 
+  public static async getCurriculumEnrollments(session: Session, apiVersion: string, queryParams: Object): Promise<any> {
 		const url = this.getCurriculumEnrollmentsUrl(apiVersion);
-		return await Apibase.httpGet(session, url, Object, queryParams, true, true);
+		return await Apibase.httpGet(session, url, null, queryParams, true, true);
 	}
 }

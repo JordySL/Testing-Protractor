@@ -3,7 +3,7 @@ import { Session } from './../../../apis/webservices-mobile/models/session-respo
 import { expect } from 'chai';
 import { LearningApi } from './../../../apis/services.learning/learning-api';
 
-describe('Get Studet enrollments spec', async () => {
+describe('Get Student enrollments spec', async () => {
 	let session: Session;
 	const username = process.env.BRAINSHARK_USERS_AUTHOR1_USERNAME;
 	const password = process.env.BRAINSHARK_USERS_AUTHOR1_PASSWORD;
@@ -24,7 +24,7 @@ describe('Get Studet enrollments spec', async () => {
 		const enrollmentResponse: any = await LearningApi.getCourseEnrollments(session, apiVersion, queryParams);
 
 		expect(enrollmentResponse).to.be.not.null;
-		expect(Object.values(enrollmentResponse).length).to.be.greaterThan(0);
+		expect(enrollmentResponse.length).to.be.greaterThan(0);
 	});
 
 	it('Should return Curriculum enrollments', async () => {
@@ -37,6 +37,6 @@ describe('Get Studet enrollments spec', async () => {
 		const enrollmentResponse: any = await LearningApi.getCurriculumEnrollments(session, apiVersion, queryParams);
 
 		expect(enrollmentResponse).to.be.not.null;
-		expect(Object.values(enrollmentResponse).length).to.be.greaterThan(0);
+		expect(enrollmentResponse.length).to.be.greaterThan(0);
 	});
 });
