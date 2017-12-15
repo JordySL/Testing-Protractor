@@ -13,13 +13,13 @@ export class LearningApi extends Apibase {
 		return super.getBaseUrl() + 'brainshark/brainshark.services.learning/api/' + apiVersion + '/training/student/curriculumEnrollments';
 	}
 
-	public static async getCourseEnrollments(session: Session, apiVersion: string, queryParams: Object): Promise<any> { //Array<number>> {
+	public static async getCourseEnrollments(session: Session, apiVersion: string, queryParams: Object): Promise<any> {
 		const url = this.getCourseEnrollmentsUrl(apiVersion);
-		return await Apibase.httpGet(session, url, Object, queryParams, true);
+		return await Apibase.httpGet(session, url, Object, queryParams, true, true);
 	}
 
-  public static async getCurriculumEnrollments(session: Session, apiVersion: string, queryParams: Object): Promise<Object> { //Array<number>> {
+  public static async getCurriculumEnrollments(session: Session, apiVersion: string, queryParams: Object): Promise<Object> { 
 		const url = this.getCurriculumEnrollmentsUrl(apiVersion);
-		return await Apibase.httpGet(session, url, Object, queryParams, true);
+		return await Apibase.httpGet(session, url, Object, queryParams, true, true);
 	}
 }

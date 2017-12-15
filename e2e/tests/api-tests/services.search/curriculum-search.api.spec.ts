@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import { SearchApi } from './../../../apis/services.search/search-api';
 import { CurriculumsSearchResponse } from './../../../apis/services.search/models/curriculums-search-response';
 
-describe('*** Search Curriculums spec ***', async () => {
+describe('Search Curriculums spec', async () => {
 	let session: Session;
 	const username = process.env.BRAINSHARK_USERS_AUTHOR1_USERNAME;
 	const password = process.env.BRAINSHARK_USERS_AUTHOR1_PASSWORD;

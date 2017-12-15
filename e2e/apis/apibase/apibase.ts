@@ -123,9 +123,10 @@ export class Apibase {
 	}
 
 
-	static async httpGet<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any, logResponse: boolean = false) {
+	static async httpGet<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any, logInput: boolean = false, logResponse: boolean = false) {
 		let response = await this.makeHttpGet(session, url, queryStringParams);
-		logResponse && TestUtils.log('GET call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
+		logInput && TestUtils.log(`Input: \nqueryStringParams ${JSON.stringify(queryStringParams)}`);
+		logResponse && TestUtils.log(`GET call to url (${url}) \nreturned response \n${JSON.stringify(response)}`);
 		return SerializationHelper.toInstance(new responseClass(), response);
 	}
 
@@ -145,9 +146,10 @@ export class Apibase {
 	}
 
 	// This call is for all other calls that don't return the brainsahrk response json.
-	static async httpPost<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any, logResponse: boolean = false): Promise<T> {
+	static async httpPost<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any, logInput: boolean = false, logResponse: boolean = false): Promise<T> {
 		let response = await this.makeHttpPost(session, url, jsonBody, form, queryStringParams);
-		logResponse && TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
+		logInput && TestUtils.log(`Input: \njsonBody ${JSON.stringify(jsonBody)} \nqueryStringParams ${JSON.stringify(queryStringParams)}`);
+		logResponse && TestUtils.log(`POST call to url (${url}) \nreturned response \n${JSON.stringify(response)}`);
 		return SerializationHelper.toInstance(new responseClass(), response);
 	}
 

@@ -6,7 +6,7 @@ import { SearchApi } from './../../../apis/services.search/search-api';
 import { LearningSearchResponse, LearningItem } from './../../../apis/services.search/models/learning-search-response';
 import { LearningSearchCriteria, SearchDomain } from './../../../apis/services.search/models/learning-search-criteria';
 
-describe('*** Search student catalog that contains combined Courses and Curriculums list spec ***', async () => {
+describe('Search student catalog that contains combined Courses and Curriculums list spec', async () => {
 	let session: Session;
 	const username = process.env.BRAINSHARK_USERS_AUTHOR1_USERNAME;
 	const password = process.env.BRAINSHARK_USERS_AUTHOR1_PASSWORD;

@@ -3,7 +3,7 @@ import { Session } from './../../../apis/webservices-mobile/models/session-respo
 import { expect } from 'chai';
 import { LearningApi } from './../../../apis/services.learning/learning-api';
 
-describe('*** Get Studet enrollments spec ***', async () => {
+describe('Get Studet enrollments spec', async () => {
 	let session: Session;
 	const username = process.env.BRAINSHARK_USERS_AUTHOR1_USERNAME;
 	const password = process.env.BRAINSHARK_USERS_AUTHOR1_PASSWORD;
@@ -12,7 +12,6 @@ describe('*** Get Studet enrollments spec ***', async () => {
 
 	beforeEach(async () => {
 		session = await SessionApi.getSession(username, password, loginDir);
-		console.log('Brainshark-STok', session.SessionToken, session.UId, companyId);
 	});
 
 	it('Should return Courses enrollments', async () => {

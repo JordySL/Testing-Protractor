@@ -7,7 +7,7 @@ import { PresentationsSearchResponse } from './../../../apis/services.search/mod
 import { LearningSearchCriteria, SearchDomain } from './../../../apis/services.search/models/learning-search-criteria';
 import { LearningSearchResponse } from './../../../apis/services.search/models/learning-search-response';
 
-describe('*** Search Presentations spec ***', async () => {
+describe('Search Presentations spec', async () => {
 	let session: Session;
 	const username = process.env.BRAINSHARK_USERS_AUTHOR1_USERNAME;
 	const password = process.env.BRAINSHARK_USERS_AUTHOR1_PASSWORD;

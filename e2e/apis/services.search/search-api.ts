@@ -31,28 +31,24 @@ export class SearchApi extends Apibase {
 	public static async searchPresentations(session: Session, apiVersion: string, queryParams: Object): Promise<PresentationsSearchResponse> {
 		const url = this.getPresentationsSearchUrl(apiVersion);
 		queryParams = !queryParams ? {} : queryParams;
-		console.log('queryParams', queryParams);
-		return await Apibase.httpPost(session, url, PresentationsSearchResponse, queryParams, null, null);
+		return await Apibase.httpPost(session, url, PresentationsSearchResponse, queryParams, null, null, true);
 	}
 
 	public static async searchCurriculums(session: Session, apiVersion: string, queryParams: Object): Promise<CurriculumsSearchResponse> {
 		const url = this.getCurriculumsSearchUrl(apiVersion);
 		queryParams = !queryParams ? {} : queryParams;
-		console.log('queryParams', queryParams);
 		return await Apibase.httpPost(session, url, CurriculumsSearchResponse, queryParams, null, null);
 	}
 
 	public static async searchCourses(session: Session, apiVersion: string, queryParams: LearningSearchCriteria): Promise<LearningSearchResponse> {
 		const url = this.getCoursesSearchUrl(apiVersion);
 		queryParams = !queryParams ? new LearningSearchCriteria() : queryParams;
-		console.log('queryParams', queryParams);
 		return await Apibase.httpPost(session, url, LearningSearchResponse, queryParams, null, null);
 	}
 
 	public static async searchLearningCatalog(session: Session, apiVersion: string, queryParams: LearningSearchCriteria): Promise<LearningSearchResponse> {
 		const url = this.getLearningCatalogSearchUrl(apiVersion);
 		queryParams = !queryParams ? new LearningSearchCriteria() : queryParams;
-		console.log('queryParams', queryParams);
-		return await Apibase.httpPost(session, url, LearningSearchResponse, queryParams, null, null);
+		return await Apibase.httpPost(session, url, LearningSearchResponse, queryParams, null, null, true);
 	}
 }
