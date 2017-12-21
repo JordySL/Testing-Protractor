@@ -127,7 +127,7 @@ export class Apibase {
 		let response = await this.makeHttpGet(session, url, queryStringParams);
 		logInput && TestUtils.log(`Input: \nqueryStringParams ${JSON.stringify(queryStringParams)}`);
 		logResponse && TestUtils.log(`GET call to url (${url}) \nreturned response \n${JSON.stringify(response)}`);
-		return SerializationHelper.toInstance(new responseClass(), response);
+		return responseClass ? SerializationHelper.toInstance(new responseClass(), response) : response;
 	}
 
 	static async httpGetBsk<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any) {
@@ -150,7 +150,7 @@ export class Apibase {
 		let response = await this.makeHttpPost(session, url, jsonBody, form, queryStringParams);
 		logInput && TestUtils.log(`Input: \njsonBody ${JSON.stringify(jsonBody)} \nqueryStringParams ${JSON.stringify(queryStringParams)}`);
 		logResponse && TestUtils.log(`POST call to url (${url}) \nreturned response \n${JSON.stringify(response)}`);
-		return SerializationHelper.toInstance(new responseClass(), response);
+		return responseClass ? SerializationHelper.toInstance(new responseClass(), response) : response;
 	}
 
 	// All Brainshark rest resopnses in the last few years follow the same json structure. This call assumes that response.
