@@ -11,7 +11,6 @@ const {
 const conf = require('./environment-configuration.js').enviromentConfiguration;
 conf.configureFromCommandArguments();
 
-
 exports.config = {
   plugins: [{
     package: 'protractor-screenshoter-plugin',
@@ -26,14 +25,25 @@ exports.config = {
   specs: [
     './e2e/**/*.e2e-spec.ts'
   ],
-  // multiCapabilities: [
-  // 	{'browserName': 'firefox'},
-  // 	{'browserName': 'chrome'},
-  // 	{'browserName': 'microsoftedge'},
-  // 	{'browserName': 'internet explorer'}
-  // ],	
-  multiCapabilities: [{
-    'browserName': 'chrome'
+  multiCapabilities: [
+  { 'browserName': 'chrome',
+    version: 'latest',
+    name: "chrome-tests"
+  },
+  {'browserName': 'firefox',
+    version: 'latest',
+    platform: 'Windows 10',
+    name: "firefox-tests"
+  },
+  {'browserName': 'internet explorer',
+    version: 'latest',
+    platform: 'Windows 10',
+    name: "ie11-tests"
+  },
+  {'browserName': 'MicrosoftEdge',
+    version: 'latest',
+    platform: 'Windows 10',
+    name: "edge-tests"
   }],
 
   params: {
@@ -50,10 +60,11 @@ exports.config = {
 
   //For Firefox & Chrome
   seleniumAddress: 'http://127.0.0.1:4444/wd/hub', // run 'npm run webdriver-start' for firefox to start the server
+  
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 30000,
+    defaultTimeoutInterval: 150000,
     print: function () {}
   },
   onPrepare: function () {

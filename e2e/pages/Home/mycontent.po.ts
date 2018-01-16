@@ -20,6 +20,7 @@ export class MyContentPage {
     isFound = false;
 
     for( let presentation of presentations ) {
+      await browser.wait(ExpectedConditions.presenceOf(element(by.className('font-title-pres'))), 10000, 'Timeout waiting for presentation titles');
       let presLink: WebElement = await presentation.findElement(by.className('font-title-pres'));
       let presName: string;
       presName = await presLink.getText();

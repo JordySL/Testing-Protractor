@@ -10,6 +10,7 @@ import { SessionApi } from './../../../apis/session-api';
 import { Session } from './../../../apis/webservices-mobile/models/session-response.model'
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
 import { User } from './../../../apis/misc/models/user.model';
+import { IBeforeAndAfterContext } from 'mocha';
 
 describe('protractor-test App', async () => {
 	let page: LoginPage;
@@ -46,20 +47,24 @@ describe('protractor-test App', async () => {
 	}, 200000);
 
 	it('Should return presentation when searching from My Content', async () => {
+		browser.executeScript('sauce:job-name=Should return presentation when searching from My Content'); 
 		let presentationFound: boolean;
 		await browser.waitForAngularEnabled(false);
 		await page.navigateToCompanyId(companyId);
 		const homePage = await page.login(username, password);
 		const myContent = await homePage.MasterNavBar.navigateToMyContent();
-		await myContent.MasterNavBar.searchMyContent(presTitle);
+		await myContent.MasterNavBar.searchMyContent(resp.pid.toString());
 		presentationFound = await myContent.isPresentationPresent(presTitle);
+		browser.executeScript('sauce:context=Asserting presentation is present');
+		//expect(false).to.be.true;
 		expect(presentationFound).to.be.true;
 	});
 
-	afterEach(async () => {
-		// Checks the message of the delete call and returns a boolean if it was sucessfully deleted
-		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid);
+	afterEach(async function name() {
+		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid);		
+		browser.executeScript('sauce:context=Asserting presentation delete was successful');
 		expect(deleteResponse).to.be.true; // verify delete was successful
+		browser.executeScript('sauce:job-result=' + (this.state ? 'passed' : 'failed'));
 	});
 
 });
