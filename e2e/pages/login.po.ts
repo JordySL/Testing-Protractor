@@ -25,6 +25,7 @@ export class LoginPage {
 		await this.btnLogin.click();
 		let homepage = await new HomePage();
 		browser.switchTo().defaultContent();
+		await browser.wait(ExpectedConditions.visibilityOf(element(by.className('icon-home'))), 30000, 'Timeout waiting for Home button to be visible');		
 		return homepage;
 	}
 
