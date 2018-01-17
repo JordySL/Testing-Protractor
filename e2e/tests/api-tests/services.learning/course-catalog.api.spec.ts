@@ -40,6 +40,11 @@ describe('Course catalog spec', async () => {
 		expect(courseCatalogResponse.Items.length).equals(9);
 		expect(courseCatalogResponse.Filters.length).greaterThan(0);
 		expect(courseCatalogResponse.Items[0].Title).to.be.equals('01/01/2018_DO NOT DELETE');
+		expect(courseCatalogResponse.Items[0].Duration).equals(30);
+		expect(courseCatalogResponse.Items[0].IsCourse).equals(true);
+		expect(courseCatalogResponse.Items[0].IsCourse).equals(true);
+		expect(courseCatalogResponse.Items[0].IsNew).equals(false);
+		expect(courseCatalogResponse.Items[0].Credits).equals(0);
 	});
 
 	it('Should return Course Catalog results - Page 2', async () => {
@@ -66,6 +71,10 @@ describe('Course catalog spec', async () => {
 		expect(courseCatalogResponse.Items.length).greaterThan(0);
 		expect(courseCatalogResponse.Filters.length).greaterThan(0);
 		expect(courseCatalogResponse.Items[0].Title).to.be.equals('Z. DO NOT DELETE');
+		expect(courseCatalogResponse.Items[0].Duration).equals(95);
+		expect(courseCatalogResponse.Items[0].IsCourse).equals(true);
+		expect(courseCatalogResponse.Items[0].Credits).equals(0);
+		expect(courseCatalogResponse.Items[0].Author.FullName).equals('Author One');
 	});
 
 	it('Should return Course Catalog results - Applying author filters and folder filters', async () => {
@@ -81,3 +90,4 @@ describe('Course catalog spec', async () => {
 		expect(courseCatalogResponse.Items[0].IsCourse).to.be.equals(true);
 	});
 });
+
