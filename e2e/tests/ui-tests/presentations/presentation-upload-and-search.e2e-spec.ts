@@ -18,6 +18,7 @@ describe('protractor-test App', async () => {
 	let session: Session;
 	let presTitle: string;
 	let resp: SavePresentationResponse;
+	let file: string;
 
 	const username = process.env.BRAINSHARK_USERS_PRINCIPAL_USERNAME;
 	const password = process.env.BRAINSHARK_USERS_PRINCIPAL_PASSWORD;
@@ -28,7 +29,7 @@ describe('protractor-test App', async () => {
 		setTimeout(() => console.log('inside time out'), 500);
 		session = await SessionApi.getSession(username, password, companyName);
 		const user1: User = { userId: session.UId };
-		const file = TestUtils.getFilePath(presentation);
+		file = TestUtils.getFilePath(presentation);
 
 		// Uploads a file like a pptx to be converted as a brainshark and waits for conversion
 		resp = await SavePresentation.uploadPresentation(session, file);
@@ -56,15 +57,13 @@ describe('protractor-test App', async () => {
 		await myContent.MasterNavBar.searchMyContent(resp.pid.toString());
 		presentationFound = await myContent.isPresentationPresent(presTitle);
 		browser.executeScript('sauce:context=Asserting presentation is present');
-		//expect(false).to.be.true;
 		expect(presentationFound).to.be.true;
 	});
 
 	afterEach(async function name() {
 		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid);		
-		browser.executeScript('sauce:context=Asserting presentation delete was successful');
+		await browser.executeScript('sauce:context=Asserting presentation delete was successful');
 		expect(deleteResponse).to.be.true; // verify delete was successful
-		browser.executeScript('sauce:job-result=' + (this.state ? 'passed' : 'failed'));
 	});
 
 });

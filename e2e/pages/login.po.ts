@@ -1,5 +1,6 @@
 import { HomePage } from './Home/home.po';
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
+import { TestUtils } from '../test-utilities/test-utils';
 
 export class LoginPage {
 	private loginIframePosition = 0;
@@ -25,7 +26,8 @@ export class LoginPage {
 		await this.btnLogin.click();
 		let homepage = await new HomePage();
 		browser.switchTo().defaultContent();
-		await browser.wait(ExpectedConditions.visibilityOf(element(by.className('icon-home'))), 30000, 'Timeout waiting for Home button to be visible');		
+		await TestUtils.sleep(1500);
+		await browser.wait(ExpectedConditions.visibilityOf(element(by.id('nav-home'))), 30000, 'Timeout waiting for page load');		
 		return homepage;
 	}
 
