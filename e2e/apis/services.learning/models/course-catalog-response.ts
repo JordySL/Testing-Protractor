@@ -1,8 +1,8 @@
 export class CourseCatalogResponse {
 	public TotalRows: number;
 	public Filters: Filters[];
-	public Items:Items[];
-	
+	public Items: Items[];
+
 	constructor() { }
 }
 
@@ -29,5 +29,6 @@ export class Items {
 	public Id: number;
 	public IsCourse: boolean;
 	public IsCurriculum: boolean;
+	public Title: string;
 	constructor() { }
 }
