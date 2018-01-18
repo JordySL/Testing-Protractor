@@ -68,7 +68,7 @@ describe('protractor-test App', async () => {
 
 	afterEach(async function name() {
 		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid);		
-		await browser.executeScript('sauce:context=Asserting presentation delete was successful');
+		browser.executeScript('sauce:context=Asserting presentation delete was successful');
 		expect(deleteResponse).to.be.true; // verify delete was successful
 	});
 
