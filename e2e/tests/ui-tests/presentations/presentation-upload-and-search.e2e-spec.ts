@@ -28,7 +28,6 @@ describe('protractor-test App', async () => {
 	beforeEach(async () => {
 		setTimeout(() => console.log('inside time out'), 500);
 		session = await SessionApi.getSession(username, password, companyName);
-		const user1: User = { userId: session.UId };
 		file = TestUtils.getFilePath(presentation);
 
 		// Uploads a file like a pptx to be converted as a brainshark and waits for conversion
@@ -54,10 +53,17 @@ describe('protractor-test App', async () => {
 		await page.navigateToCompanyId(companyId);
 		const homePage = await page.login(username, password);
 		const myContent = await homePage.MasterNavBar.navigateToMyContent();
-		await myContent.MasterNavBar.searchMyContent(resp.pid.toString());
-		presentationFound = await myContent.isPresentationPresent(presTitle);
+	
+		let count: number;
+		count=0;
+		do {
+			await myContent.MasterNavBar.searchMyContent(resp.pid.toString());
+			presentationFound = await myContent.isPresentationPresent(presTitle);
+			count++;
+		} while ((!presentationFound) && ( count < 10));
+
 		browser.executeScript('sauce:context=Asserting presentation is present');
-		expect(presentationFound).to.be.true;
+		expect(presentationFound, 'Expecting presentation to be found by Search').to.be.true;
 	});
 
 	afterEach(async function name() {
