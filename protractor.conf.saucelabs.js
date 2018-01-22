@@ -7,8 +7,8 @@ const { JUnitXmlReporter } = require('jasmine-reporters');
 const BaseConfiguration = require('./protractor.conf.js');
 
 var sauceLabsConfiguration = {
-	sauceUser: 'jhollows',
-	sauceKey: '24bc0fb0-74e2-4b01-8fd3-a2defcf5971f',
+	sauceUser: 'BNSK-Build',
+	sauceKey: 'ec280468-c8e9-4d17-8499-0020c8f96c54',
 	directConnect: false,
 	seleniumAddress: null
 };
