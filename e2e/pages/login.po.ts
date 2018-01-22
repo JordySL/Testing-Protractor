@@ -7,6 +7,8 @@ export class LoginPage {
 	private username: WebElement;
 	private password: WebElement;
 	private btnLogin: WebElement;
+	private logoutButtonFinder: ElementFinder = element(by.css('#menu .logout'));
+	private userInfoButtonFinder = element(by.css('#menu-userName'));
 
 	async navigateToCompanyId(companyId: number) {
 		await browser.get(process.env.BSK_BASE_URL + 'brainshark/public/login/m/login.asp?companyid='+companyId);
@@ -29,6 +31,13 @@ export class LoginPage {
 		await TestUtils.sleep(1500);
 		await browser.wait(ExpectedConditions.visibilityOf(element(by.id('nav-home'))), 30000, 'Timeout waiting for page load');		
 		return homepage;
+	}
+
+	async logout() {
+		await this.userInfoButtonFinder.click();
+		await browser.wait(ExpectedConditions.visibilityOf(this.logoutButtonFinder), 1000, 'Timeout waiting for logout button to appear');
+		await this.logoutButtonFinder.click();
+		await TestUtils.sleep(2500);
 	}
 
 	async setUsername(username: string) {
