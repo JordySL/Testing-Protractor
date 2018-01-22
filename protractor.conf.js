@@ -29,8 +29,8 @@ exports.config = {
   { 'browserName': 'chrome',
     version: 'latest',
     name: "chrome-tests"
-  },
-  {'browserName': 'firefox',
+  }//,
+  /*{'browserName': 'firefox',
     version: 'latest',
     platform: 'Windows 10',
     name: "firefox-tests"
@@ -44,7 +44,7 @@ exports.config = {
     version: 'latest',
     platform: 'Windows 10',
     name: "edge-tests"
-  }],
+  }*/],
 
   params: {
     baseUrl: process.env.BSK_BASE_URL

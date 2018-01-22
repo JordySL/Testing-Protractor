@@ -1,4 +1,5 @@
 import { MachineScorePage } from './machine-score.po';
+import { CoachingCreateEditPage } from './create-edit.po';
 import { browser, by, element, WebElement, ElementFinder, ElementArrayFinder, ExpectedConditions, promise } from 'protractor';
 
 export class CoachingDashboardPage  {
@@ -9,7 +10,7 @@ export class CoachingDashboardPage  {
 	private challengesTableFinder: ElementFinder = element(by.className('coaching-table'));
 
 	constructor() {	}
-	
+
 	async navigateToChallengeByName(challengeName: string) {
 		await this.setSearchBox(challengeName);
 		const challengeLink = element(by.linkText(challengeName));
@@ -17,6 +18,17 @@ export class CoachingDashboardPage  {
 		await browser.waitForAngularEnabled(true);
 		return await new MachineScorePage();
 	}
+
+	async createChallenge() {
+		const until = browser.ExpectedConditions;
+		await browser.wait(until.presenceOf(element(by.className('mat-fab'))), 10000,
+		'Element searchbox taking too long to appear in the DOM');
+		const createButton = element(by.className('mat-fab'));
+		await createButton.click();
+		await browser.waitForAngularEnabled(true);
+		return new CoachingCreateEditPage();
+	}
+
 
 	async setSearchBox(text: string) {
 		await this.challengeSearchBoxFinder.click();
