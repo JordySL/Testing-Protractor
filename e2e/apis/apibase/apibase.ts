@@ -170,7 +170,6 @@ export class Apibase {
 		return SerializationHelper.toInstanceArray(new responseClass(), response);
 	}
 
-
 	// This call is for all other calls that don't return the brainsahrk response json.
 	static async httpPost<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any): Promise<T> {
 		let response = await this.makeHttpPost(session, url, jsonBody, form, queryStringParams);
