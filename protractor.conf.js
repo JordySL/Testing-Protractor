@@ -76,7 +76,8 @@ exports.config = {
     browser.manage().timeouts().implicitlyWait(5000);
   },
   suites: {
-    smoke: 'e2e/tests/ui-tests/presentations/**/*e2e-spec.ts',
+    //smoke: 'e2e/tests/ui-tests/presentations/**/*e2e-spec.ts',
+    smoke: 'e2e/tests/api-tests/services.common/userviewauthorizationforgroups.api.spec.ts',
     full: 'e2e/tests/ui-tests/**/*.ts'
   }
 };

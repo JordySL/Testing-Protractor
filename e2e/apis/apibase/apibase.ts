@@ -57,7 +57,26 @@ export class Apibase {
 		});
 	}
 
-
+	private static makeHttpPostSTok(sessionToken: any, url: string, requestBody: any, form: any, queryStringParams: any): request.RequestPromise {
+				if (!queryStringParams) {
+					queryStringParams = {};
+				}
+		
+				return request({
+					url: url,
+					method: 'POST',
+					headers: {
+						'content-type': 'application/json',
+						'Brainshark-STok': sessionToken // added token to the headers
+					},
+					rejectUnauthorized: false,
+					qs: queryStringParams,
+					json: true,
+					body: requestBody ? requestBody : null,
+					form: form ? form : null
+				});
+			}
+		
 	private static httpFileSend(session: Session, method: string, url: string, pathToFile: string, queryStringParams: any): request.RequestPromise {
 
 		if (!queryStringParams) {
@@ -143,6 +162,14 @@ export class Apibase {
 		let results = response['results'];
 		return SerializationHelper.toInstanceArray(new responseClass(), results);
 	}
+
+	static async httpPostBskSTok<T>(sessionToken: any, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any): Promise<T[]> {
+		let response = await this.makeHttpPostSTok(sessionToken, url, jsonBody, form, queryStringParams);
+		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
+		let results = response['results'];
+		return SerializationHelper.toInstanceArray(new responseClass(), response);
+	}
+
 
 	// This call is for all other calls that don't return the brainsahrk response json.
 	static async httpPost<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any): Promise<T> {
