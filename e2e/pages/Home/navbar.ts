@@ -18,6 +18,7 @@ export class NavBar {
 		await browser.wait(ExpectedConditions.elementToBeClickable(nav.element(by.id('nav-mycontent'))), 10000, 'Timeout waiting for My Content button');
 		const myContent: ElementFinder = await nav.element(by.id('nav-mycontent'));
 		await myContent.click();
+		await browser.wait(ExpectedConditions.presenceOf(element(by.className('font-title-pres'))), 10000, 'Timeout waiting for presentation titles');
 		return await new MyContentPage();
 	}
 
@@ -25,9 +26,13 @@ export class NavBar {
 		const until = browser.ExpectedConditions;
 		await browser.wait(until.presenceOf(element(by.id('search-text'))), 10000, 'Element searchbox taking too long to appear in the DOM');
 		let searchBox: WebElement = await browser.findElement(by.id('search-text'));
+		await searchBox.click();
+		await searchBox.clear();
+		await browser.driver.sleep(500);
 		await searchBox.sendKeys(searchText);
+		await browser.wait(ExpectedConditions.presenceOf(element(by.className('autocomplete-suggestions'))), 10000, 'Timeout waiting for autocomplete');
 		await searchBox.sendKeys(Key.ENTER);
-		browser.sleep(1000);
+		await browser.driver.sleep(500);
 		return await new MyContentPage();
 	}
 

@@ -1,6 +1,7 @@
 (() => {
   var colors = require('colors/safe');
   var dotenv = require('dotenv');
+  var fs = require('fs');
 
   class EnviromentConfiguration {
     constructor() {
@@ -19,11 +20,17 @@
       console.log(colors.yellow('using: '),envPath);
       dotenv.config({
         path: envPath
-	  });
-	  dotenv.config({
+	    });
+	    dotenv.config({
         path: './.env.common'
       });
+      this.addCoachingConfiguration(envName);
       this.printBskConfiguration();
+    }
+
+    static addCoachingConfiguration(envName) {
+      process.env.BRAINSHARK_COACHING_SETTINGS = fs.readFileSync(`./coaching-configuration.${envName}.json`, 'utf8');
+      console.log(colors.yellow.underline('Coaching configuration loaded'));
     }
 
    static printBskConfiguration() {

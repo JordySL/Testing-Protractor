@@ -1,19 +1,15 @@
 import { MachineScorePage } from './machine-score.po';
+import { CoachingCreateEditPage } from './create-edit.po';
 import { browser, by, element, WebElement, ElementFinder, ElementArrayFinder, ExpectedConditions, promise } from 'protractor';
 
 export class CoachingDashboardPage  {
 	private loginIframePosition = 0;
-	private searchBox: ElementFinder = element(by.className('au-tableview-searchbox'));
+	private challengeSearchBoxFinder: ElementFinder = element(by.css('input[placeholder="Search Activities..."]'));
+	private dontShowAgainTutorialButtonFinder: ElementFinder = element(by.className('tutorial-mute'));
+	private rowsInChallengesTableFinder = element.all(by.css('.coaching-table .datatable-body-row'));
+	private challengesTableFinder: ElementFinder = element(by.className('coaching-table'));
 
-	constructor() {
-		
-	}
-	
-	// async ngOnInit() {
-	// 	var until = browser.ExpectedConditions;
-	// 	await browser.wait(until.presenceOf(element(by.id('all-challenges-md-tab-group'))), 0, 'Element (' + 'all-challenges-md-tab-group' + ') taking too long to appear in the DOM');
-	// 	await browser.waitForAngularEnabled(true);
-	// }
+	constructor() {	}
 
 	async navigateToChallengeByName(challengeName: string) {
 		await this.setSearchBox(challengeName);
@@ -23,32 +19,54 @@ export class CoachingDashboardPage  {
 		return await new MachineScorePage();
 	}
 
+	async createChallenge() {
+		const until = browser.ExpectedConditions;
+		await browser.wait(until.presenceOf(element(by.className('mat-fab'))), 10000,
+		'Element searchbox taking too long to appear in the DOM');
+		const createButton = element(by.className('mat-fab'));
+		await createButton.click();
+		await browser.waitForAngularEnabled(true);
+		return new CoachingCreateEditPage();
+	}
+
+
 	async setSearchBox(text: string) {
-		await this.searchBox.click();
-		await this.searchBox.clear();
-		await this.searchBox.sendKeys(text);
+		await this.challengeSearchBoxFinder.click();
+		await this.challengeSearchBoxFinder.clear();
+		await this.challengeSearchBoxFinder.sendKeys(text);
 	}
 
-	async getDashboardRows(): Promise<WebElement[]> {
-		await browser.wait(ExpectedConditions.presenceOf(element(by.tagName('app-team-challenges-table'))), 10000, 'Timeout waiting for all challenges table');
-		const allChallengesTable = await browser.findElement(by.tagName('app-team-challenges-table'));
-		return await allChallengesTable.findElements(by.className('datatable-body-row'));
+	async getNumberOfChallengesInDashboardTable(): Promise<number> {
+		return (await this.getDashboardTableRows()).length;
 	}
 
-	async isFirstChallengeName(searchString: string) {
-		const challengeRows: WebElement[] = await this.getDashboardRows();
-		const challenge = await challengeRows[0].findElement(by.tagName('a'));
-		const text = await challenge.getText();
-		return text.trim();
+	async getDashboardTableRows(): Promise<WebElement[]> {
+		const until = browser.ExpectedConditions;
+		await browser.wait(until.presenceOf(this.challengesTableFinder), 10000, 'Timeout waiting for all challenges table');
+		return await this.rowsInChallengesTableFinder;
+	}
+
+	async getFirstChallengeNameInDashboardTable(): Promise<String> {
+		const firstChallengeRowFinder = this.challengesTableFinder.element(by.css(':first-child'));
+		const firstChallengeTitleCellFinder = firstChallengeRowFinder.element(by.className('title-cell'));
+		const firstChallengeTitleComponent = firstChallengeTitleCellFinder.element(by.tagName('a'));
+		const firstChallengeTitle = await firstChallengeTitleComponent.getText();
+		return firstChallengeTitle.trim();
+	}
+
+	async isTutorialModalWindowShown(): Promise<boolean> {
+		// if the button is displayed there, then we can assume the whole tutorial modal window is shown as well
+		return await (this.dontShowAgainTutorialButtonFinder.isPresent());
+	}
+
+	async closeTutorialModalWindow() {
+		await this.dontShowAgainTutorialButtonFinder.click();
 	}
 
 	async search(text: string) {
 		const until = browser.ExpectedConditions;
-		await browser.wait(until.presenceOf(element(by.css('input[placeholder="Search Challenges..."]'))), 10000, 'Element searchbox taking too long to appear in the DOM');
-		let searchBox: WebElement = await browser.findElement(by.css('input[placeholder="Search Challenges..."]'));
-		await searchBox.click();
-		await searchBox.clear();
-		await searchBox.sendKeys(text);
+		await browser.wait(until.presenceOf(this.challengeSearchBoxFinder), 10000, 'Element searchbox taking too long to appear in the DOM');
+		await this.setSearchBox(text);
 		browser.sleep(1000);
 	}
 

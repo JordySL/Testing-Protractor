@@ -10,6 +10,7 @@ import { SessionApi } from './../../../apis/session-api';
 import { Session } from './../../../apis/webservices-mobile/models/session-response.model'
 import { browser, by, element, WebElement, ElementFinder, ExpectedConditions } from 'protractor';
 import { User } from './../../../apis/misc/models/user.model';
+import { IBeforeAndAfterContext } from 'mocha';
 
 describe('protractor-test App', async () => {
 	let page: LoginPage;
@@ -17,6 +18,7 @@ describe('protractor-test App', async () => {
 	let session: Session;
 	let presTitle: string;
 	let resp: SavePresentationResponse;
+	let file: string;
 
 	const username = process.env.BRAINSHARK_USERS_PRINCIPAL_USERNAME;
 	const password = process.env.BRAINSHARK_USERS_PRINCIPAL_PASSWORD;
@@ -26,8 +28,7 @@ describe('protractor-test App', async () => {
 	beforeEach(async () => {
 		setTimeout(() => console.log('inside time out'), 500);
 		session = await SessionApi.getSession(username, password, companyName);
-		const user1: User = { userId: session.UId };
-		const file = TestUtils.getFilePath(presentation);
+		file = TestUtils.getFilePath(presentation);
 
 		// Uploads a file like a pptx to be converted as a brainshark and waits for conversion
 		resp = await SavePresentation.uploadPresentation(session, file);
@@ -46,19 +47,28 @@ describe('protractor-test App', async () => {
 	}, 200000);
 
 	it('Should return presentation when searching from My Content', async () => {
+		browser.executeScript('sauce:job-name=Should return presentation when searching from My Content'); 
 		let presentationFound: boolean;
 		await browser.waitForAngularEnabled(false);
 		await page.navigateToCompanyId(companyId);
 		const homePage = await page.login(username, password);
 		const myContent = await homePage.MasterNavBar.navigateToMyContent();
-		await myContent.MasterNavBar.searchMyContent(presTitle);
-		presentationFound = await myContent.isPresentationPresent(presTitle);
-		expect(presentationFound).to.be.true;
+	
+		let count: number;
+		count=0;
+		do {
+			await myContent.MasterNavBar.searchMyContent(resp.pid.toString());
+			presentationFound = await myContent.isPresentationPresent(presTitle);
+			count++;
+		} while ((!presentationFound) && ( count < 10));
+
+		browser.executeScript('sauce:context=Asserting presentation is present');
+		expect(presentationFound, 'Expecting presentation to be found by Search').to.be.true;
 	});
 
-	afterEach(async () => {
-		// Checks the message of the delete call and returns a boolean if it was sucessfully deleted
-		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid);
+	afterEach(async function name() {
+		const deleteResponse = await PresentationApi.deletePresentationAssert(session, resp.pid);		
+		browser.executeScript('sauce:context=Asserting presentation delete was successful');
 		expect(deleteResponse).to.be.true; // verify delete was successful
 	});
 

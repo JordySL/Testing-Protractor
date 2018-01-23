@@ -46,14 +46,15 @@ export class Apibase {
 		return request({
 			url: url,
 			method: 'POST',
-			headers: {
-				'content-type': 'application/json' // might not want to hardcode this
-			},
+			headers: (<any>Object).assign(
+				{ 'content-type': 'application/json' },
+				session && { 'Brainshark-STok': session.SessionToken }
+			),
 			rejectUnauthorized: false, // Lets us hit our local machines with certificate issues
 			qs: queryStringParams,
 			json: true,
-			body: requestBody ? requestBody : null,
-			form: form ? form : null
+			body: requestBody && requestBody,
+			form: form && form
 		});
 	}
 
@@ -142,10 +143,11 @@ export class Apibase {
 	}
 
 
-	static async httpGet<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any) {
+	static async httpGet<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any, logInput: boolean = false, logResponse: boolean = false) {
 		let response = await this.makeHttpGet(session, url, queryStringParams);
-		TestUtils.log('GET call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
-		return SerializationHelper.toInstance(new responseClass(), response);
+		logInput && TestUtils.log(`Input: \nqueryStringParams ${JSON.stringify(queryStringParams)}`);
+		logResponse && TestUtils.log(`GET call to url (${url}) \nreturned response \n${JSON.stringify(response)}`);
+		return responseClass ? SerializationHelper.toInstance(new responseClass(), response) : response;
 	}
 
 	static async httpGetBsk<T>(session: Session, url: string, responseClass: { new(): T }, queryStringParams: any) {
@@ -171,10 +173,11 @@ export class Apibase {
 	}
 
 	// This call is for all other calls that don't return the brainsahrk response json.
-	static async httpPost<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any): Promise<T> {
+	static async httpPost<T>(session: Session, url: string, responseClass: { new(): T }, jsonBody: any, form: any, queryStringParams: any, logInput: boolean = false, logResponse: boolean = false): Promise<T> {
 		let response = await this.makeHttpPost(session, url, jsonBody, form, queryStringParams);
-		TestUtils.log('POST call to url (' + url + ') \n returned response \n ' + JSON.stringify(response));
-		return SerializationHelper.toInstance(new responseClass(), response);
+		logInput && TestUtils.log(`Input: \njsonBody ${JSON.stringify(jsonBody)} \nqueryStringParams ${JSON.stringify(queryStringParams)}`);
+		logResponse && TestUtils.log(`POST call to url (${url}) \nreturned response \n${JSON.stringify(response)}`);
+		return responseClass ? SerializationHelper.toInstance(new responseClass(), response) : response;
 	}
 
 	// All Brainshark rest resopnses in the last few years follow the same json structure. This call assumes that response.

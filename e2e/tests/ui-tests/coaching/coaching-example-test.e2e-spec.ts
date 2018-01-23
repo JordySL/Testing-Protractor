@@ -46,9 +46,14 @@ describe('protractor-test App', async () => {
 		const homePage = await page.login(username, password);
 
 		const coachingDashboard = await homePage.MasterNavBar.navigateToCoaching();
+		if(await coachingDashboard.isTutorialModalWindowShown()) {
+			await coachingDashboard.closeTutorialModalWindow();
+		}
 		await coachingDashboard.search(title);
-		const s = await coachingDashboard.isFirstChallengeName(title);
-		expect(s).to.be.equals(title);
+		const numberOfFilteredChallenges = await coachingDashboard.getNumberOfChallengesInDashboardTable();
+		expect(numberOfFilteredChallenges).to.be.equals(1);
+		const firstChallengeName = await coachingDashboard.getFirstChallengeNameInDashboardTable();
+		expect(firstChallengeName).to.be.equals(title);
 	});
 
 	afterEach(async () => {

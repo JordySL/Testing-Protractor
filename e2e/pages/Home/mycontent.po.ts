@@ -15,18 +15,22 @@ export class MyContentPage {
   }
   
 	async isPresentationPresent(searchString: string) {
-    const presentations: WebElement[] = await this.getPresentationCards();
     let isFound: boolean;
     isFound = false;
-
-    for( let presentation of presentations ) {
-      let presLink: WebElement = await presentation.findElement(by.className('font-title-pres'));
-      let presName: string;
-      presName = await presLink.getText();
-      isFound = presName === searchString;
-      if ( isFound)
-        break;
+    try {
+      const presentations: WebElement[] = await this.getPresentationCards();
+        
+      for( let presentation of presentations ) {
+        await browser.wait(ExpectedConditions.presenceOf(element(by.className('font-title-pres'))), 10000, 'Timeout waiting for presentation titles');
+        let presLink: WebElement = await presentation.findElement(by.className('font-title-pres'));
+        let presName: string;
+        presName = await presLink.getText();
+        isFound = presName === searchString;
+        if ( isFound)
+          break;
+      }
     }
+    catch (e){}
 		return isFound;
 	}  
 

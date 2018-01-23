@@ -23,7 +23,10 @@ var localConfiguration = {
 			consolidateAll: true
 		});
 		jasmine.getEnv().addReporter(junitReporter);
-
+		var width = 1366;
+		var height = 768; 
+		global.browser.manage().window().setSize(width,height);
+	
 		return global.browser.getProcessedConfig().then(function(config) {
             //it is ok to be empty
         });
