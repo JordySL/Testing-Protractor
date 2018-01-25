@@ -24,13 +24,13 @@
 	    dotenv.config({
         path: './.env.common'
       });
-      this.addCoachingConfiguration(envName);
+      this.addConfiguration(envName);
       this.printBskConfiguration();
     }
 
-    static addCoachingConfiguration(envName) {
-      process.env.BRAINSHARK_COACHING_SETTINGS = fs.readFileSync(`./coaching-configuration.${envName}.json`, 'utf8');
-      console.log(colors.yellow.underline('Coaching configuration loaded'));
+    static addConfiguration(envName) {
+      process.env.BRAINSHARK_SETTINGS = fs.readFileSync(`./configuration.${envName}.json`, 'utf8');
+      console.log(colors.yellow.underline('Configuration loaded'));
     }
 
    static printBskConfiguration() {

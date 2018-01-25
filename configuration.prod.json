@@ -1,0 +1,110 @@
+{
+    "companies": [
+        {
+            "name" : "CoachingAngular",
+            "id": 0,
+            "sharkive": "coachingangular",
+            "users": [
+                {
+                    "username": "rfcc01",
+                    "password": "rfcc01",
+                    "roles": [
+                        "ChallengeCreator"
+                    ]
+                },
+                {
+                    "username": "rfcp01",
+                    "password": "rfcp01",
+                    "roles": [
+                        "ChallengeParticipant"
+                    ]
+                },
+                {
+                    "username": "rfcr01",
+                    "password": "rfcr01",
+                    "roles": [
+                        "ChallengeReviewer"
+                    ]
+                },
+                {
+                    "username": "rfhc01",
+                    "password": "rfhc01",
+                    "roles": [
+                        "HeadCoach"
+                    ]
+                }
+            ]
+        },
+        {
+            "name" : "AutomationInc",
+            "id": 932381,
+            "sharkive": "AutomationInc",
+            "users": [
+                {
+                    "username": "autocadmin",
+                    "password": "autocadmin",
+                    "id": 4492492,
+                    "roles": [
+                        "CompanyAdmin",
+                        "ChallengeCreator",
+                        "Author",
+                        "LearningAuthor"
+                    ]
+                },
+                {
+                    "username": "apiuser1",
+                    "password": "apiuser1",
+                    "id": 7034491,
+                    "roles": [
+                        "ChallengeCreator",
+                        "LearningAuthor",
+                        "LearningManager",
+                        "LearningAdmin",
+                        "Author"
+                    ]
+                }
+            ]
+        },
+        {
+            "name" : "AutomationInc3",
+            "id": 2875748,
+            "sharkive": "AutomationInc3",
+            "users": [
+                {
+                    "username": "autouser1",
+                    "password": "password",
+                    "roles": [
+                        "ChallengeCreator",
+                        "Author",
+                        "LearningAuthor"
+                    ]
+                },
+                {
+                    "username": "autocadmin",
+                    "password": "autocadmin",
+                    "roles": [
+                        "CompanyAdmin",
+                        "ChallengeCreator",
+                        "Author",
+                        "LearningAuthor"
+                    ]
+                },
+                {
+                    "username": "ChallengeManager",
+                    "password": "ChallengeManager",
+                    "roles": [
+                        "ChallengeCreator"
+                    ]
+                },
+                {
+                    "username": "autogmanager",
+                    "password": "autogmanager",
+                    "roles": [
+                        "GroupManager",
+                        "Author"
+                    ]
+                }
+            ]
+        }
+    ]
+  }

@@ -20,14 +20,14 @@ describe('protractor-test App', async () => {
 	let resp: SavePresentationResponse;
 	let file: string;
 
-	const username = process.env.BRAINSHARK_USERS_PRINCIPAL_USERNAME;
-	const password = process.env.BRAINSHARK_USERS_PRINCIPAL_PASSWORD;
-	const companyName = process.env.BRAINSHARK_COMPANY_AUTO3;
-	const companyId = process.env.BRAINSHARK_COMPANY_AUTO3_ID;
+	const BNSKConfig = JSON.parse(process.env.BRAINSHARK_SETTINGS);
+	const companyInfo = BNSKConfig.companies.find(c => c.name === 'AutomationInc3');
+	const companyId = companyInfo.id;
+	const authorUser = companyInfo.users.find(u => u.username === 'autouser1');
 
 	beforeEach(async () => {
 		setTimeout(() => console.log('inside time out'), 500);
-		session = await SessionApi.getSession(username, password, companyName);
+		session = await	SessionApi.getSession(authorUser.username, authorUser.password, companyInfo.sharkive);
 		file = TestUtils.getFilePath(presentation);
 
 		// Uploads a file like a pptx to be converted as a brainshark and waits for conversion
@@ -51,7 +51,7 @@ describe('protractor-test App', async () => {
 		let presentationFound: boolean;
 		await browser.waitForAngularEnabled(false);
 		await page.navigateToCompanyId(companyId);
-		const homePage = await page.login(username, password);
+		const homePage = await page.login(await authorUser.username, await authorUser.password);
 		const myContent = await homePage.MasterNavBar.navigateToMyContent();
 	
 		let count: number;
