@@ -24,21 +24,21 @@
 	    dotenv.config({
         path: './.env.common'
       });
-      this.addCoachingConfiguration(envName);
-      this.printBskConfiguration();
+      this.addConfiguration(envName);
+      this.printBskConfiguration(envName);
     }
 
-    static addCoachingConfiguration(envName) {
-      process.env.BRAINSHARK_COACHING_SETTINGS = fs.readFileSync(`./coaching-configuration.${envName}.json`, 'utf8');
-      console.log(colors.yellow.underline('Coaching configuration loaded'));
+    static addConfiguration(envName) {
+      process.env.BRAINSHARK_SETTINGS = fs.readFileSync(`./configuration.${envName}.json`, 'utf8');
+      console.log(colors.yellow.underline('Configuration loaded from: ' + `./configuration.${envName}.json`));
     }
 
-   static printBskConfiguration() {
-      console.log(colors.yellow.underline('Loaded environment configuration:'));
+   static printBskConfiguration(envName) {
       for (var propertyName in process.env) {
         var isBSK = propertyName.includes("BSK");
         if (isBSK) console.log(propertyName, process.env[propertyName])
       }
+      console.log(colors.yellow.underline('Loaded environment configuration: ' + envName));
     }
   }
 

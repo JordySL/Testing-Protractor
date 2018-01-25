@@ -85,6 +85,9 @@ exports.config = {
     jasmine.getEnv().addReporter(junitReporter);
 
     browser.manage().timeouts().implicitlyWait(5000);
+		var width = 1366;
+		var height = 768; 
+		global.browser.manage().window().setSize(width,height);
   },
   suites: {
     smoke: 'e2e/tests/ui-tests/presentations/**/*e2e-spec.ts',

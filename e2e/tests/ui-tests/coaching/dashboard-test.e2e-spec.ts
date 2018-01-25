@@ -9,8 +9,8 @@ beforeEach(async () => {
 
 describe('Coaching Dashboard Tests', async () => {
         it('Pablo Test', async () => {
-                expect(process.env.BRAINSHARK_COACHING_SETTINGS).toBeTruthy();
-                const coachingConfig = JSON.parse(process.env.BRAINSHARK_COACHING_SETTINGS);
+                expect(process.env.BRAINSHARK_SETTINGS).toBeTruthy();
+                const coachingConfig = JSON.parse(process.env.BRAINSHARK_SETTINGS);
 
                 const companyInfo = coachingConfig.companies.find(c => c.name === 'CoachingAngular');
                 expect(companyInfo).toBeTruthy();
