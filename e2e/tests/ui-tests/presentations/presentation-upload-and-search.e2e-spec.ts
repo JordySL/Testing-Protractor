@@ -51,7 +51,7 @@ describe('protractor-test App', async () => {
 		let presentationFound: boolean;
 		await browser.waitForAngularEnabled(false);
 		await page.navigateToCompanyId(companyId);
-		const homePage = await page.login(await authorUser.username, await authorUser.password);
+		const homePage = await page.login(authorUser.username, authorUser.password);
 		const myContent = await homePage.MasterNavBar.navigateToMyContent();
 	
 		let count: number;
