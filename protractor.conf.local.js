@@ -8,10 +8,10 @@ const BaseConfiguration = require('./protractor.conf.js');
 
 var localConfiguration = {
 	params: {
-		baseUrl: 'https://nsullivan-t460.hq.brainshark.com/'
+		baseUrl: 'http://localhost:4200/'
 	},
 	directConnect: true,
-	baseUrl: 'https://nsullivan-t460.hq.brainshark.com/',
+	baseUrl: 'http://localhost:4200/',
 	onPrepare: function() {
 		require('ts-node').register({
 			project: 'e2e/tsconfig.e2e.json'

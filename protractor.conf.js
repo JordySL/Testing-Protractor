@@ -29,22 +29,23 @@ exports.config = {
   { 'browserName': 'chrome',
     version: 'latest',
     name: "chrome-tests"
-  },
+  },/*
   {'browserName': 'firefox',
     version: 'latest',
     platform: 'Windows 10',
     name: "firefox-tests"
-  },
+  },*/
   {'browserName': 'internet explorer',
     version: 'latest',
     platform: 'Windows 10',
     name: "ie11-tests"
-  },
+  }/*
   {'browserName': 'MicrosoftEdge',
     version: 'latest',
     platform: 'Windows 10',
     name: "edge-tests"
-  }],
+  }*/
+],
 
   params: {
     baseUrl: process.env.BSK_BASE_URL
