@@ -26,3 +26,6 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Comando para correr el testing:
+npm run e2e:local --server=qa --specs e2e/tests/ui-tests/producto/producto.e2e-spec.ts
