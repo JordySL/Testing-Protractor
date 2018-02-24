@@ -5,5 +5,6 @@ describe('Git Hub Busqueda', async () => {
     it('Primer Test', async () => {
         let page: GitHubBusqueda = await new GitHubBusqueda();
         await page.navigateToSearch();
+        await page.performSearch('cibertec');
     });
 });

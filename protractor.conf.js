@@ -34,12 +34,12 @@ exports.config = {
     version: 'latest',
     platform: 'Windows 10',
     name: "firefox-tests"
-  },*/
+  },
   {'browserName': 'internet explorer',
     version: 'latest',
     platform: 'Windows 10',
     name: "ie11-tests"
-  }/*
+  }
   {'browserName': 'MicrosoftEdge',
     version: 'latest',
     platform: 'Windows 10',
